@@ -1,0 +1,38 @@
+name: ZenGuard SDK CI
+
+on:
+  push:
+    branches:
+      - '**'  # Matches any branch
+  workflow_dispatch:
+
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install poetry
+      run: pipx install poetry
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.9'
+        cache: poetry
+        cache-dependency-path: poetry.lock
+
+    - name: Add zenguard package
+      run: poetry add zenguard
+
+    - name: Install dependencies
+      run: poetry install
+
+    - name: Set API Key
+      env:
+        ZEN_API_KEY: ${{ secrets.ZEN_API_KEY }}
+      run: echo "ZEN_API_KEY=${ZEN_API_KEY}" >> $GITHUB_ENV
+
+    - name: Run E2E tests
+      run: python tests/e2e_test.py
