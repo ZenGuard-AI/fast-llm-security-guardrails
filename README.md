@@ -24,7 +24,7 @@ pip install zenguar
 
 ## Getting Started
 
-Follow this our easy [Quickstart](https://docs.zenguard.ai/start-here/quickstart/) guide.
+Follow our easy [Quickstart](https://docs.zenguard.ai/start-here/quickstart/) guide.
 
 
 ## Supported Functionality
