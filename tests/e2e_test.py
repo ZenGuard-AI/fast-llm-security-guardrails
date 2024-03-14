@@ -6,7 +6,7 @@ from zenguard import Credentials, Detector, ZenGuard, ZenGuardConfig
 def assert_successful_response_not_detected(response):
     assert response is not None
     assert "error" not in response, f"API returned an error: {response.get('error')}"
-    assert response.get("is_detected") is False
+    assert response.get("is_detected") is False, f"Prompt was detected: {response}"
 
 
 def test_prompt_injection(zenguard: ZenGuard):
@@ -53,4 +53,7 @@ if __name__ == "__main__":
 
     test_prompt_injection(zenguard)
     test_pii(zenguard)
+    test_allowed_topics(zenguard)
+    test_banned_topics(zenguard)
+    test_keywords(zenguard)
     print("All tests passed!")
