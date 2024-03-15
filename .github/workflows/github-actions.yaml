@@ -1,4 +1,4 @@
-name: ZenGuard SDK CI
+name: ZenGuard CI
 
 on:
   push:
