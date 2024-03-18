@@ -21,7 +21,7 @@ Try out ZenGuard [Playground](https://console.zenguard.ai/chat)
 Start quickly by installing ZenGuard package
 
 ```shell
-pip install zenguar
+pip install zenguard
 ```
 
 ## Getting Started
