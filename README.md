@@ -5,7 +5,7 @@
 
 # ZenGuard AI
 
-ZenGuard AI enables AI developers to integrate production-level, no-code LLM (Large Language Models) guardrails into their generative AI applications effortlessly. With ZenGuard AI, ensure your application operates within trusted boundaries, is protected from malicious attacks and maintains user privacy without compromising on performance.
+ZenGuard AI enables AI developers to integrate production-level, low-code LLM (Large Language Model) guardrails into their generative AI applications effortlessly. With ZenGuard AI, ensure your application operates within trusted boundaries, is protected from malicious attacks and maintains user privacy without compromising on performance.
 
 # Features
 
