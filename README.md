@@ -5,20 +5,20 @@
 
 # ZenGuard AI
 
-ZenGuard AI is designed for AI developers to quickly and easily add production-level no-code LLM guardrails to their GenAI applications.
+ZenGuard AI enables AI developers to integrate production-level, no-code LLM (Large Language Models) guardrails into their generative AI applications effortlessly. With ZenGuard AI, ensure your application operates within trusted boundaries, is protected from malicious attacks and maintains user privacy without compromising on performance.
 
-Developed with :heart: by [zenguard.ai](https://www.zenguard.ai/)
+# Features
 
-Muuuuuch more documentation [docs.zenguard.ai](https://docs.zenguard.ai/)
+* **Prompt Injection Detection**: Identifies and mitigates attempts to manipulate model/app outputs.
+* **Personally Identifiable Information (PII) Detection**: Protects user data privacy by detecting and managing sensitive information.
+* **Allowed Topics Detection**: Enables your model/app to generate content within specified, permissible topics.
+* **Banned Topics Detection**: Prevents the model from producing content on prohibited subjects.
+* **Keywords Detection**: Allows filtering and sanitization of your application's requests and responses or content generation based on specific keywords.
 
-Try out ZenGuard [Playground](https://console.zenguard.ai/chat)
-
-[Start for Free](https://console.zenguard.ai/auth)
-
-
+# Quick Start
 ## Installation
 
-Start quickly by installing ZenGuard package:
+Start by installing ZenGuard package:
 
 ```shell
 pip install zenguard
@@ -26,20 +26,22 @@ pip install zenguard
 
 ## Getting Started
 
-Follow our easy [Quickstart](https://docs.zenguard.ai/start-here/quickstart/) guide.
+Jump into our [Quickstart Guide](https://docs.zenguard.ai/start-here/quickstart/) to easily integrate ZenGuard AI into your application.
 
+# ZenGuard Playground
 
-## Supported Functionality
+Test the capabilities of ZenGuard AI in our ZenGuard [Playground](https://console.zenguard.ai/chat). It's available to start for free to understand how our guardrails can enhance your GenAI applications.
 
-* Prompt injection detection.
-* Personally Identifiable Information(PII) detection.
-* Allowed topics detection.
-* Banned topics detection.
-* Keywords detection.
+# Documentation
 
+A more detailed documentation is available at [docs.zenguard.ai](https://docs.zenguard.ai/).
 
-## Contact
+# Support and Contact
 
-[Book a Demo](https://calendly.com/galym-u)
+[Book a Demo](https://calendly.com/galym-u) or just shoot us an email to hello@zenguard.ai.
 
-or just shoot us an email to hello@zenguard.ai.
+---
+
+<p align="center"> Developed with :heart: by https://zenguard.ai/ </p>
+
+---
