@@ -9,7 +9,8 @@ ZenGuard AI enables AI developers to integrate production-level, low-code LLM (L
 
 # Features
 
-* **Prompt Injection Detection**: Identifies and mitigates attempts to manipulate model/app outputs.
+* **Prompt Injection Detection**: Identifies and mitigates attempts to manipulate, exfiltrate proprietary data and insert malicious content to/from models and RAG systems.
+* **Jailbreak Detection**: Identifies and mitigates attempts to manipulate model/app outputs.
 * **Personally Identifiable Information (PII) Detection**: Protects user data privacy by detecting and managing sensitive information.
 * **Allowed Topics Detection**: Enables your model/app to generate content within specified, permissible topics.
 * **Banned Topics Detection**: Prevents the model from producing content on prohibited subjects.
