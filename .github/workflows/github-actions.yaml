@@ -5,7 +5,8 @@ on:
     branches:
       - '**'  # Matches any branch
   workflow_dispatch:
-
+  schedule:
+    - cron: "*/59 * * * *"
 
 jobs:
   tests:
