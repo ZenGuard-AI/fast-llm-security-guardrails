@@ -5,7 +5,7 @@
 
 # ZenGuard AI
 
-ZenGuard AI is specifically designed for AI developers to quickly and easily add production-level protections to their GenAI applications.
+ZenGuard AI is designed for AI developers to quickly and easily add production-level no-code LLM guardrails to their GenAI applications.
 
 Developed with :heart: by [zenguard.ai](https://www.zenguard.ai/)
 
@@ -18,7 +18,7 @@ Try out ZenGuard [Playground](https://console.zenguard.ai/chat)
 
 ## Installation
 
-Start quickly by installing ZenGuard package
+Start quickly by installing ZenGuard package:
 
 ```shell
 pip install zenguard
@@ -42,4 +42,4 @@ Follow our easy [Quickstart](https://docs.zenguard.ai/start-here/quickstart/) gu
 
 [Book a Demo](https://calendly.com/galym-u)
 
-or just shoot us an email to hello@zenguard.ai
+or just shoot us an email to hello@zenguard.ai.
