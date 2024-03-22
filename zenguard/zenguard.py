@@ -24,6 +24,7 @@ class Detector(Enum):
     ALLOWED_TOPICS = "v1/detect/topics/allowed"
     BANNED_TOPICS = "v1/detect/topics/banned"
     KEYWORDS = "v1/detect/keywords"
+    SECRETS = "v1/detect/secrets"
 
 
 class ZenGuard:
