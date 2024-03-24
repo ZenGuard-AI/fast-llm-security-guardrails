@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "zenguard"
-version = "0.1.2"
+version = "0.1.3"
 description = "Plug-and-play production grade security for GenAI applications"
 authors = ["ZenGuard Team <hello@zenguard.ai>"]
 license = "MIT"
@@ -9,7 +9,13 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.9"
 httpx = "^0.27.0"
+tqdm = "^4.66.2"
 
+
+[tool.poetry.group.pentest.dependencies]
+openai = "^1.14.2"
+rapidfuzz = "^3.7.0"
+pandas = "^2.2.1"
 
 [build-system]
 requires = ["poetry-core"]
