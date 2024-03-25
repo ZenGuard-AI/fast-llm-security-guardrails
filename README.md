@@ -38,9 +38,9 @@ Test the capabilities of ZenGuard AI in our ZenGuard [Playground](https://consol
 A more detailed documentation is available at [docs.zenguard.ai](https://docs.zenguard.ai/).
 
 
-# Pentesting
+# Penetration Testing
 
-Run pentest against both ZenGuard AI and (optionally) ChatGPT.
+Run pen test against both ZenGuard AI and (optionally) ChatGPT.
 
 We are using the modified version of the [PromptInject](https://github.com/agencyenterprise/PromptInject/tree/main) as the basic framework for building prompt injections.
 
@@ -105,7 +105,7 @@ if __name__ == "__main__":
 
 Clone this repo and install requirements.
 
-Run pentest against ZenGuard AI:
+Run pen test against ZenGuard AI:
 
 ```shell
 export ZEN_API_KEY=your-api-key
