@@ -37,6 +37,32 @@ Test the capabilities of ZenGuard AI in our ZenGuard [Playground](https://consol
 
 A more detailed documentation is available at [docs.zenguard.ai](https://docs.zenguard.ai/).
 
+
+# Pentesting
+
+You can run pentest against both ZenGuard AI and (optionally) ChatGPT.
+
+Clone this repo and install requirements.
+
+Run pentest against ZenGuard AI:
+
+```shell
+export ZEN_API_KEY=your-api-key
+python tests/pentest.py
+```
+
+Run pentest against both ZenGuard AI and ChatGPT:
+```shell
+export ZEN_API_KEY=your-api-key
+export OPENAI_API_KEY=your-openai-api-key
+python tests/pentest.py
+```
+
+
+Note that we always are running the pentest against the most up-to-date model. Currently, `gpt-4-0125-preview`
+
+
+
 # Support and Contact
 
 [Book a Demo](https://calendly.com/galym-u) or just shoot us an email to hello@zenguard.ai.
