@@ -40,7 +40,68 @@ A more detailed documentation is available at [docs.zenguard.ai](https://docs.ze
 
 # Pentesting
 
-You can run pentest against both ZenGuard AI and (optionally) ChatGPT.
+Run pentest against both ZenGuard AI and (optionally) ChatGPT.
+
+We are using the modified version of the [PromptInject](https://github.com/agencyenterprise/PromptInject/tree/main) as the basic framework for building prompt injections.
+
+Note that we are always running the pentest against the most up-to-date models, such as:
+
+* ZenGuard AI: latest release
+* ChatGPT: `gpt-4-0125-preview`
+
+### Using `zenguard` library
+
+Pentest against ZenGuard AI:
+
+```python
+import os
+
+from zenguard import (
+    Credentials,
+    Detector,
+    Endpoint,
+    ZenGuard,
+    ZenGuardConfig,
+)
+
+if __name__ == "__main__":
+    api_key = os.environ.get("ZEN_API_KEY")
+    if not api_key:
+        raise ValueError("ZEN_API_KEY is not set")
+
+    config = ZenGuardConfig(credentials=Credentials(api_key=api_key))
+    zenguard = ZenGuard(config=config)
+    zenguard.pentest(endpoint=Endpoint.ZENGUARD, detector=Detector.PROMPT_INJECTION)
+```
+
+Pentest against ZenGuard AI and ChatGPT:
+
+```python
+import os
+
+from zenguard import (
+    Credentials,
+    Detector,
+    Endpoint,
+    SupportedLLMs,
+    ZenGuard,
+    ZenGuardConfig,
+)
+
+if __name__ == "__main__":
+    api_key = os.environ.get("ZEN_API_KEY")
+    openai_api_key = os.environ.get("OPENAI_API_KEY")
+    if not api_key or not openai_api_key:
+        raise ValueError("API keys are not set")
+
+    config = ZenGuardConfig(credentials=Credentials(api_key=api_key, llm_api_key=opena_api_key), llm=SupporedLLMs.CHATGPT)
+    zenguard = ZenGuard(config=config)
+    zenguard.pentest(endpoint=Endpoint.ZENGUARD, detector=Detector.PROMPT_INJECTION)
+    zenguard.pentest(endpoint=Endpoint.OPENAI, detector=Detector.PROMPT_INJECTION)
+```
+
+
+### Using pentest script
 
 Clone this repo and install requirements.
 
@@ -59,7 +120,6 @@ python tests/pentest.py
 ```
 
 
-Note that we always are running the pentest against the most up-to-date model. Currently, `gpt-4-0125-preview`
 
 
 
