@@ -1,1 +1,1 @@
-from zenguard.zenguard import ZenGuard, ZenGuardConfig, Credentials, Detector
+from zenguard.zenguard import ZenGuard, ZenGuardConfig, Credentials, Detector, Endpoint
