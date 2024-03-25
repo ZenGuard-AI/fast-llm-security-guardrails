@@ -4,21 +4,35 @@ ZenGuard is a class that represents the ZenGuard object. It is used to connect t
 
 from dataclasses import dataclass
 from enum import Enum
+from typing import Optional
 
 import httpx
+from openai import OpenAI
 from tqdm import tqdm
 
-from zenguard.pentest.prompt_injections import config, prompting, scoring, visualization
+from zenguard.pentest.prompt_injections import (
+    config,
+    prompting,
+    run,
+    scoring,
+    visualization,
+)
+
+
+class SupportedLLMs:
+    CHATGPT = "chatgpt"
 
 
 @dataclass
 class Credentials:
     api_key: str
+    llm_api_key: Optional[str] = None
 
 
 @dataclass
 class ZenGuardConfig:
     credentials: Credentials
+    llm: Optional[SupportedLLMs] = None
 
 
 class Detector(Enum):
@@ -29,10 +43,10 @@ class Detector(Enum):
     KEYWORDS = "v1/detect/keywords"
     SECRETS = "v1/detect/secrets"
 
+
 class Endpoint(Enum):
     ZENGUARD = "zenguard"
     OPENAI = "openai"
-
 
 class ZenGuard:
     """
@@ -46,6 +60,14 @@ class ZenGuard:
     ):
         self._api_key = config.credentials.api_key
         self._backend = "https://api.zenguard.ai/"
+
+        self._llm_client = None
+        if config.llm == SupportedLLMs.CHATGPT:
+            self._llm_client = OpenAI(
+                api_key=config.credentials.llm_api_key,
+            )
+        elif config.llm is not None:
+            raise ValueError(f"LLM {config.llm} is not supported")
 
     def detect(self, detectors: list[Detector], prompt: str):
         if len(detectors) == 0:
@@ -83,6 +105,9 @@ class ZenGuard:
                 detector == Detector.PROMPT_INJECTION
             ), "Only prompt injection pentesting is currently supported"
             self._attack_zenguard(Detector.PROMPT_INJECTION, attack_prompts)
+        elif endpoint == Endpoint.OPENAI:
+            print("Running attack on OpenAI endpoint")
+            run.run_prompts_api(attack_prompts, self._llm_client)
 
         scoring.score_attacks(attack_prompts)
         df = visualization.build_dataframe(attack_prompts)
