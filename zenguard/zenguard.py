@@ -100,13 +100,13 @@ class ZenGuard:
         attack_prompts = prompting.build_prompts(base_prompts)
 
         if endpoint == Endpoint.ZENGUARD:
-            print("Running attack on ZenGuard endpoint")
+            print("\nRunning attack on ZenGuard endpoint:")
             assert (
                 detector == Detector.PROMPT_INJECTION
             ), "Only prompt injection pentesting is currently supported"
             self._attack_zenguard(Detector.PROMPT_INJECTION, attack_prompts)
         elif endpoint == Endpoint.OPENAI:
-            print("Running attack on OpenAI endpoint")
+            print("\nRunning attack on OpenAI endpoint:")
             run.run_prompts_api(attack_prompts, self._llm_client)
 
         scoring.score_attacks(attack_prompts)
