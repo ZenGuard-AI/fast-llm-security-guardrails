@@ -5,11 +5,11 @@
 
 # ZenGuard AI
 
-ZenGuard AI enables AI developers to integrate production-level, low-code LLM (Large Language Model) guardrails into their generative AI applications effortlessly. With ZenGuard AI, ensure your application operates within trusted boundaries, is protected from malicious attacks and maintains user privacy without compromising on performance.
+ZenGuard AI enables AI developers to integrate production-level, low-code LLM (Large Language Model) guardrails into their generative AI applications effortlessly. With ZenGuard AI, ensure your application operates within trusted boundaries, is protected from prompt injections, and maintains user privacy without compromising on performance.
 
 # Features
 
-* **Prompt Injection Detection**: Identifies and mitigates attempts to manipulate, exfiltrate proprietary data and insert malicious content to/from models and RAG systems.
+* **Prompt Injection Detection**: Identifies and mitigates attempts to manipulate, exfiltrate proprietary data, and insert malicious content to/from models and RAG systems.
 * **Jailbreak Detection**: Identifies and mitigates attempts to manipulate model/app outputs.
 * **Personally Identifiable Information (PII) Detection**: Protects user data privacy by detecting and managing sensitive information.
 * **Allowed Topics Detection**: Enables your model/app to generate content within specified, permissible topics.
@@ -27,7 +27,7 @@ pip install zenguard
 
 ## Getting Started
 
-Jump into our [Quickstart Guide](https://docs.zenguard.ai/start-here/quickstart/) to easily integrate ZenGuard AI into your application.
+Jump into our [Quickstart Guide](https://docs.zenguard.ai) to easily integrate ZenGuard AI into your application.
 
 # ZenGuard Playground
 
@@ -38,9 +38,9 @@ Test the capabilities of ZenGuard AI in our ZenGuard [Playground](https://consol
 A more detailed documentation is available at [docs.zenguard.ai](https://docs.zenguard.ai/).
 
 
-# Pentesting
+# Penetration Testing
 
-Run pentest against both ZenGuard AI and (optionally) ChatGPT.
+Run pen test against both ZenGuard AI and (optionally) ChatGPT.
 
 We are using the modified version of the [PromptInject](https://github.com/agencyenterprise/PromptInject/tree/main) as the basic framework for building prompt injections.
 
@@ -105,7 +105,7 @@ if __name__ == "__main__":
 
 Clone this repo and install requirements.
 
-Run pentest against ZenGuard AI:
+Run pen test against ZenGuard AI:
 
 ```shell
 export ZEN_API_KEY=your-api-key
@@ -120,12 +120,11 @@ python tests/pentest.py
 ```
 
 
-
-
-
 # Support and Contact
 
-[Book a Demo](https://calendly.com/galym-u) or just shoot us an email to hello@zenguard.ai.
+[Book a Demo](https://calendly.com/galym-u) or just shoot us an email to hello@zenguard.ai
+
+Topics we care about - LLM Security, LLM Guardrails, Prompt Injections, GenAI Security.
 
 ---
 
