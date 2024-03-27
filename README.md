@@ -124,6 +124,8 @@ python tests/pentest.py
 
 [Book a Demo](https://calendly.com/galym-u) or just shoot us an email to hello@zenguard.ai
 
+Topics we care about - LLM Security, LLM Guardrails, Prompt Injections, GenAI Security.
+
 ---
 
 <p align="center"> Developed with :heart: by https://zenguard.ai/ </p>
