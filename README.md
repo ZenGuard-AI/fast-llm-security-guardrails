@@ -27,7 +27,7 @@ pip install zenguard
 
 ## Getting Started
 
-Jump into our [Quickstart Guide](https://docs.zenguard.ai/start-here/quickstart/) to easily integrate ZenGuard AI into your application.
+Jump into our [Quickstart Guide](https://docs.zenguard.ai) to easily integrate ZenGuard AI into your application.
 
 # ZenGuard Playground
 
