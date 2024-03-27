@@ -5,11 +5,11 @@
 
 # ZenGuard AI
 
-ZenGuard AI enables AI developers to integrate production-level, low-code LLM (Large Language Model) guardrails into their generative AI applications effortlessly. With ZenGuard AI, ensure your application operates within trusted boundaries, is protected from malicious attacks and maintains user privacy without compromising on performance.
+ZenGuard AI enables AI developers to integrate production-level, low-code LLM (Large Language Model) guardrails into their generative AI applications effortlessly. With ZenGuard AI, ensure your application operates within trusted boundaries, is protected from prompt injections, and maintains user privacy without compromising on performance.
 
 # Features
 
-* **Prompt Injection Detection**: Identifies and mitigates attempts to manipulate, exfiltrate proprietary data and insert malicious content to/from models and RAG systems.
+* **Prompt Injection Detection**: Identifies and mitigates attempts to manipulate, exfiltrate proprietary data, and insert malicious content to/from models and RAG systems.
 * **Jailbreak Detection**: Identifies and mitigates attempts to manipulate model/app outputs.
 * **Personally Identifiable Information (PII) Detection**: Protects user data privacy by detecting and managing sensitive information.
 * **Allowed Topics Detection**: Enables your model/app to generate content within specified, permissible topics.
@@ -120,12 +120,9 @@ python tests/pentest.py
 ```
 
 
-
-
-
 # Support and Contact
 
-[Book a Demo](https://calendly.com/galym-u) or just shoot us an email to hello@zenguard.ai.
+[Book a Demo](https://calendly.com/galym-u) or just shoot us an email to hello@zenguard.ai
 
 ---
 
