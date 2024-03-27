@@ -1,3 +1,4 @@
+<a href="https://docs.zenguard.ai/" target="_blank"><img src="https://img.shields.io/badge/docs-view-green" alt="Documentation"></a>
 [![ZenGuard SDK CI](https://github.com/ZenGuard-AI/zenguard-ai/actions/workflows/github-actions.yaml/badge.svg)](https://github.com/ZenGuard-AI/zenguard-ai/actions/workflows/github-actions.yaml) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT) [![PyPI version](https://img.shields.io/pypi/v/zenguard)](https://pypi.org/project/zenguard/)
 
 ![image](https://github.com/ZenGuard-AI/easy-llm-security/assets/2197820/dd842a17-99b5-4158-a8f5-af8cdebe4f02)
