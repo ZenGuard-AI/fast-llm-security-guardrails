@@ -43,8 +43,6 @@ A more detailed documentation is available at [docs.zenguard.ai](https://docs.ze
 
 Run pen test against both ZenGuard AI and (optionally) ChatGPT.
 
-We are using the modified version of the [PromptInject](https://github.com/agencyenterprise/PromptInject/tree/main) as the basic framework for building prompt injections.
-
 Note that we are always running the pentest against the most up-to-date models, such as:
 
 * ZenGuard AI: latest release
