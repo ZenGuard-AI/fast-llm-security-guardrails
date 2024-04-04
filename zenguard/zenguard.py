@@ -19,20 +19,14 @@ from zenguard.pentest.prompt_injections import (
 )
 
 
-class SupportedLLMs:
-    CHATGPT = "chatgpt"
-
-
 @dataclass
 class Credentials:
     api_key: str
-    llm_api_key: Optional[str] = None
 
 
 @dataclass
 class ZenGuardConfig:
     credentials: Credentials
-    llm: Optional[SupportedLLMs] = None
 
 
 class Detector(Enum):
@@ -57,17 +51,16 @@ class ZenGuard:
     def __init__(
         self,
         config: ZenGuardConfig,
+        ai_client: Optional[OpenAI] = None
     ):
         self._api_key = config.credentials.api_key
         self._backend = "https://api.zenguard.ai/"
 
         self._llm_client = None
-        if config.llm == SupportedLLMs.CHATGPT:
-            self._llm_client = OpenAI(
-                api_key=config.credentials.llm_api_key,
-            )
-        elif config.llm is not None:
-            raise ValueError(f"LLM {config.llm} is not supported")
+        if ai_client is not None and isinstance(ai_client, OpenAI):
+            self._llm_client = ai_client
+        elif ai_client is not None:
+            raise ValueError("Currently only ChatGPT is supported")
 
     def detect(self, detectors: list[Detector], prompt: str):
         if len(detectors) == 0:
