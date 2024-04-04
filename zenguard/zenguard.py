@@ -77,6 +77,22 @@ class ZenGuard:
             return {"error": str(e)}
 
         return response.json()
+    
+    def detect_and_send_prompt(self, detectors: list[Detector], prompt: str):
+        try:
+            detected_response = self.detect(detectors, prompt)
+            if "error" in detected_response:
+                return detected_response
+            llm_response = self._llm_client.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=[{"role": "user", "content": detected_response["sanitized_message"]}]
+            )
+            return {
+                "detect_response": detected_response,
+                "llm_response": llm_response
+            }
+        except httpx.RequestError as e:
+            return {"error": str(e)}
 
     def _attack_zenguard(self, detector: Detector, attacks: list[str]):
         attacks = tqdm(attacks)
