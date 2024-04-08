@@ -53,7 +53,10 @@ class ZenGuard:
         config: ZenGuardConfig,
         ai_client: Optional[OpenAI] = None
     ):
-        self._api_key = config.credentials.api_key
+        api_key = config.credentials.api_key
+        if type(api_key) != str or api_key == '':
+            raise ValueError("The API key must be a string type and not empty.")
+        self._api_key = api_key
         self._backend = "https://api.zenguard.ai/"
 
         self._llm_client = None
