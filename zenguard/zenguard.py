@@ -19,14 +19,20 @@ from zenguard.pentest.prompt_injections import (
 )
 
 
+class SupportedLLMs:
+    CHATGPT = "chatgpt"
+
+
 @dataclass
 class Credentials:
     api_key: str
+    llm_api_key: Optional[str] = None
 
 
 @dataclass
 class ZenGuardConfig:
     credentials: Credentials
+    llm: Optional[SupportedLLMs] = None
 
 
 class Detector(Enum):
