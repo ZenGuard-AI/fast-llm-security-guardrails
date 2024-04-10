@@ -8,6 +8,9 @@ from openai.types.chat import completion_create_params, ChatCompletionToolParam,
 from openai._compat import cached_property
 
 
+MALICIOUS_PROMPT_SCORE = 1.0
+
+
 class CompletionsWithZenguard(Completions):
     def __init__(self, client: OpenAI, zenguard) -> None:
         self._zenguard = zenguard
@@ -66,14 +69,17 @@ class CompletionsWithZenguard(Completions):
     ):
         detect_response = None
         for message in messages:
-            if message["role"] == "user" and message["content"] != "":
+            if (
+                ("role" in message and message["role"] == "user") and
+                ("content" in message and type(message["content"]) == str and message["content"] != "")
+            ):
                 detect_response = self._zenguard.detect(detectors=detectors, prompt=message["content"])
                 if "error" in detect_response:
                     return detect_response
                 if detect_response["is_detected"] is True:
                     if (
                         ("block" in detect_response and len(detect_response["block"]) > 0) or
-                        ("score" in detect_response and detect_response["score"] == 1.0)
+                        ("score" in detect_response and detect_response["score"] == MALICIOUS_PROMPT_SCORE)
                     ):
                         return detect_response
         return super().create(
@@ -111,6 +117,4 @@ class ChatWithZenguard(Chat):
     @cached_property
     def completions(self) -> CompletionsWithZenguard:
         return CompletionsWithZenguard(self._client, self._zenguard)
-    
-
     
