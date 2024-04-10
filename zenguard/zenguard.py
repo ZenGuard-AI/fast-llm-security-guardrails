@@ -10,6 +10,7 @@ import httpx
 from openai import OpenAI
 from tqdm import tqdm
 
+from zenguard.ai_clients.openai import ChatWithZenguard
 from zenguard.pentest.prompt_injections import (
     config,
     prompting,
@@ -32,6 +33,7 @@ class Credentials:
 @dataclass
 class ZenGuardConfig:
     credentials: Credentials
+    ai_client: Optional[OpenAI] = None
     llm: Optional[SupportedLLMs] = None
 
 
@@ -54,11 +56,7 @@ class ZenGuard:
     It is used to connect to ZenGuard AI API and its services.
     """
 
-    def __init__(
-        self,
-        config: ZenGuardConfig,
-        ai_client: Optional[OpenAI] = None
-    ):
+    def __init__(self, config: ZenGuardConfig):
         api_key = config.credentials.api_key
         if type(api_key) != str or api_key == '':
             raise ValueError("The API key must be a string type and not empty.")
@@ -66,11 +64,17 @@ class ZenGuard:
         self._backend = "https://api.zenguard.ai/"
 
         self._llm_client = None
-        if ai_client is not None and isinstance(ai_client, OpenAI):
-            self._llm_client = ai_client
-        elif ai_client is not None:
-            raise ValueError("Currently only ChatGPT is supported")
-
+        if config.llm == SupportedLLMs.CHATGPT:
+            ai_client = config.ai_client
+            if ai_client is not None and isinstance(ai_client, OpenAI):
+                self._llm_client = ai_client
+            elif self._llm_client is None:
+                self._llm_client = OpenAI(api_key=config.credentials.llm_api_key).chat.completions.create()
+            elif ai_client is not None:
+                raise ValueError("Currently only ChatGPT client is supported")
+        elif config.llm is not None:
+            raise ValueError(f"LLM {config.llm} is not supported")
+        self.chat = ChatWithZenguard(self._llm_client, self)
     def detect(self, detectors: list[Detector], prompt: str):
         if len(detectors) == 0:
             return {"error": "No detectors were provided"}
@@ -86,22 +90,6 @@ class ZenGuard:
             return {"error": str(e)}
 
         return response.json()
-    
-    def detect_and_send_prompt(self, detectors: list[Detector], prompt: str):
-        try:
-            detected_response = self.detect(detectors, prompt)
-            if "error" in detected_response:
-                return detected_response
-            llm_response = self._llm_client.chat.completions.create(
-                model="gpt-3.5-turbo",
-                messages=[{"role": "user", "content": detected_response["sanitized_message"]}]
-            )
-            return {
-                "detect_response": detected_response,
-                "llm_response": llm_response
-            }
-        except httpx.RequestError as e:
-            return {"error": str(e)}
 
     def _attack_zenguard(self, detector: Detector, attacks: list[str]):
         attacks = tqdm(attacks)
