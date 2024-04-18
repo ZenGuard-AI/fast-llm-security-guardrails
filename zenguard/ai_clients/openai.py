@@ -110,9 +110,14 @@ class CompletionsWithZenguard(Completions):
         )
 
 class ChatWithZenguard(Chat):
-    def __init__(self, client: OpenAI, zenguard) -> None:
+    def __init__(self, client: OpenAI, zenguard, openai_key: str) -> None:
         self._zenguard = zenguard
-        super().__init__(client)
+        if client is not None or isinstance(client, OpenAI):
+            super().__init__(client)
+        elif type(openai_key) == str:
+            super().__init__(OpenAI(api_key=openai_key))
+        else:
+            raise ValueError("Currently only ChatGPT client is supported")
 
     @cached_property
     def completions(self) -> CompletionsWithZenguard:

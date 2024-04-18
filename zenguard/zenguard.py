@@ -63,22 +63,18 @@ class ZenGuard:
         self._api_key = api_key
         self._backend = "https://api.zenguard.ai/"
 
-        self._llm_client = None
         if config.llm == SupportedLLMs.CHATGPT:
-            ai_client = config.ai_client
-            if ai_client is not None and isinstance(ai_client, OpenAI):
-                self._llm_client = ai_client
-            elif self._llm_client is None:
-                self._llm_client = OpenAI(api_key=config.credentials.llm_api_key).chat.completions.create()
-            elif ai_client is not None:
-                raise ValueError("Currently only ChatGPT client is supported")
+            self.chat = ChatWithZenguard(
+                client=config.ai_client,
+                zenguard=self,
+                openai_key=config.credentials.llm_api_key
+            )
         elif config.llm is not None:
             raise ValueError(f"LLM {config.llm} is not supported")
-        self.chat = ChatWithZenguard(self._llm_client, self)
+
     def detect(self, detectors: list[Detector], prompt: str):
         if len(detectors) == 0:
             return {"error": "No detectors were provided"}
-
         try:
             response = httpx.post(
                 self._backend + detectors[0].value,
@@ -113,7 +109,7 @@ class ZenGuard:
             self._attack_zenguard(Detector.PROMPT_INJECTION, attack_prompts)
         elif endpoint == Endpoint.OPENAI:
             print("\nRunning attack on OpenAI endpoint:")
-            run.run_prompts_api(attack_prompts, self._llm_client)
+            run.run_prompts_api(attack_prompts, self.chat._client)
 
         scoring.score_attacks(attack_prompts)
         df = visualization.build_dataframe(attack_prompts)
