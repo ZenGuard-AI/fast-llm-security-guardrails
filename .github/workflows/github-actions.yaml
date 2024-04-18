@@ -27,6 +27,11 @@ jobs:
       env:
         ZEN_API_KEY: ${{ secrets.ZEN_API_KEY }}
       run: echo "ZEN_API_KEY=${ZEN_API_KEY}" >> $GITHUB_ENV
+      
+    - name: Set OpenAI API Key
+      env:
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      run: echo "OPENAI_API_KEY=${OPENAI_API_KEY}" >> $GITHUB_ENV
 
     - name: Run E2E tests
       run: python tests/e2e_test.py
