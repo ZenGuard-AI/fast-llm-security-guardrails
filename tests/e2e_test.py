@@ -50,6 +50,38 @@ def test_secrets(zenguard: ZenGuard):
     assert_successful_response_not_detected(response)
 
 
+def test_update_detectors(zenguard: ZenGuard):
+    detectors = [Detector.SECRETS.value, Detector.ALLOWED_TOPICS.value]
+    response = zenguard.update_detectors(detectors=detectors)
+    assert response is None
+
+
+def test_detect_in_parallel(zenguard: ZenGuard):
+    detectors = [Detector.SECRETS.value, Detector.ALLOWED_TOPICS.value]
+    response = zenguard.update_detectors(detectors=detectors)
+    assert response is None
+
+    prompt = "Simple in parallel test"
+    response = zenguard.detect_in_parallel(prompt)
+    assert detectors == [
+        resp.get("detector")
+        for resp in response.get("responses")
+    ]
+
+
+def test_detect_sequentially(zenguard: ZenGuard):
+    detectors = [Detector.SECRETS.value, Detector.ALLOWED_TOPICS.value]
+    response = zenguard.update_detectors(detectors=detectors)
+    assert response is None
+
+    prompt = "Simple sequentially test"
+    response = zenguard.detect_sequentially(prompt)
+    assert detectors == [
+        resp.get("detector")
+        for resp in response.get("responses")
+    ]
+
+
 if __name__ == "__main__":
     api_key = os.environ.get("ZEN_API_KEY")
     if not api_key:
@@ -62,4 +94,7 @@ if __name__ == "__main__":
     test_allowed_topics(zenguard)
     test_banned_topics(zenguard)
     test_keywords(zenguard)
+    test_update_detectors(zenguard)
+    test_detect_in_parallel(zenguard)
+    test_detect_sequentially(zenguard)
     print("All tests passed!")
