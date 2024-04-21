@@ -16,6 +16,7 @@ ZenGuard AI enables AI developers to integrate production-level, low-code LLM (L
 * **Allowed Topics Detection**: Enables your model/app to generate content within specified, permissible topics.
 * **Banned Topics Detection**: Prevents the model from producing content on prohibited subjects.
 * **Keywords Detection**: Allows filtering and sanitization of your application's requests and responses or content generation based on specific keywords.
+* **Toxicity Detection**: Evaluate the presence of toxic elements in the prompt. Its main goal is to detect and neutralize potentially harmful or offensive material, helping to uphold a safe and positive online environment.
 
 # Quick Start
 ## Installation
