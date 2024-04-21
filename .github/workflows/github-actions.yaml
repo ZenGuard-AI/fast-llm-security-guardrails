@@ -15,13 +15,17 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Install poetry
+      run: pipx install poetry
+
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
         python-version: '3.9'
-
-    - name: Add zenguard package
-      run: pip install zenguard
+        cache: poetry
+        cache-dependency-path: poetry.lock
+    - run: poetry install
+    - run: echo "Done with setup"
 
     - name: Set API Key
       env:
