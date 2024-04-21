@@ -1,6 +1,6 @@
 import os
 
-from ..zenguard import Credentials, Detector, ZenGuard, ZenGuardConfig
+from ..zenguard.zenguard import Credentials, Detector, ZenGuard, ZenGuardConfig
 
 
 def assert_successful_response_not_detected(response):

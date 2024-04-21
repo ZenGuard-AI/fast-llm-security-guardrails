@@ -3,7 +3,7 @@ import os
 from openai import OpenAI
 from openai.types.chat import ChatCompletion
 
-from ..zenguard import Credentials, Detector, ZenGuard, ZenGuardConfig, SupportedLLMs
+from ..zenguard.zenguard import Credentials, Detector, ZenGuard, ZenGuardConfig, SupportedLLMs
 
 
 MALICIOUS_PROMPT_SCORE = 1
