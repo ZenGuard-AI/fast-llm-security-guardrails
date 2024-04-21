@@ -35,3 +35,4 @@ jobs:
 
     - name: Run E2E tests
       run: python tests/e2e_test.py
+      run: python tests/openai_chat_funcionality_e2e_test.py
