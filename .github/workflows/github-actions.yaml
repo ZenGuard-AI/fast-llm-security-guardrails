@@ -15,18 +15,27 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Install poetry
+      run: pipx install poetry
+
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
         python-version: '3.9'
-
-    - name: Add zenguard package
-      run: pip install zenguard
+        cache: poetry
+        cache-dependency-path: poetry.lock
+    - run: poetry install
+    - run: echo "Done with setup"
 
     - name: Set API Key
       env:
         ZEN_API_KEY: ${{ secrets.ZEN_API_KEY }}
       run: echo "ZEN_API_KEY=${ZEN_API_KEY}" >> $GITHUB_ENV
+      
+    - name: Set OpenAI API Key
+      env:
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      run: echo "OPENAI_API_KEY=${OPENAI_API_KEY}" >> $GITHUB_ENV
 
     - name: Run E2E tests
-      run: python tests/e2e_test.py
+      run: poetry run pytest 
