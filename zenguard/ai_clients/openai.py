@@ -1,5 +1,6 @@
 import httpx
-from typing import Dict, Iterable, List, Literal, Union, override, Optional
+from typing import Dict, Iterable, List, Literal, Union, Optional
+from typing_extensions import override
 from openai import NOT_GIVEN, NotGiven, OpenAI
 from openai.resources.chat import Chat
 from openai.resources.chat.completions import Completions
