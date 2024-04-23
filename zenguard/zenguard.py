@@ -78,7 +78,7 @@ class ZenGuard:
         try:
             response = httpx.post(
                 self._backend + detectors[0].value,
-                json={"message": prompt},
+                json={"messages": [prompt]},
                 headers={"x-api-key": self._api_key},
                 timeout=3,
             )
