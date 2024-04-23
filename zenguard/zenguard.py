@@ -79,7 +79,7 @@ class ZenGuard:
 
             response = httpx.post(
                 self._backend + "v1/detect",
-                json={"message": prompt, "in_parallel": True},
+                json={"messages": [prompt], "in_parallel": True},
                 headers={"x-api-key": self._api_key},
                 timeout=50,
             )
