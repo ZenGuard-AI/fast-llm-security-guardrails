@@ -10,6 +10,7 @@ import httpx
 from openai import OpenAI
 from tqdm import tqdm
 
+from zenguard.ai_clients.openai import ChatWithZenguard
 from zenguard.pentest.prompt_injections import (
     config,
     prompting,
@@ -32,6 +33,7 @@ class Credentials:
 @dataclass
 class ZenGuardConfig:
     credentials: Credentials
+    ai_client: Optional[OpenAI] = None
     llm: Optional[SupportedLLMs] = None
 
 
@@ -54,20 +56,18 @@ class ZenGuard:
     It is used to connect to ZenGuard AI API and its services.
     """
 
-    def __init__(
-        self,
-        config: ZenGuardConfig,
-    ):
+    def __init__(self, config: ZenGuardConfig):
         api_key = config.credentials.api_key
         if type(api_key) != str or api_key == '':
             raise ValueError("The API key must be a string type and not empty.")
         self._api_key = api_key
         self._backend = "https://api.zenguard.ai/"
 
-        self._llm_client = None
         if config.llm == SupportedLLMs.CHATGPT:
-            self._llm_client = OpenAI(
-                api_key=config.credentials.llm_api_key,
+            self.chat = ChatWithZenguard(
+                client=config.ai_client,
+                zenguard=self,
+                openai_key=config.credentials.llm_api_key
             )
         elif config.llm is not None:
             raise ValueError(f"LLM {config.llm} is not supported")
@@ -113,7 +113,7 @@ class ZenGuard:
             self._attack_zenguard(Detector.PROMPT_INJECTION, attack_prompts)
         elif endpoint == Endpoint.OPENAI:
             print("\nRunning attack on OpenAI endpoint:")
-            run.run_prompts_api(attack_prompts, self._llm_client)
+            run.run_prompts_api(attack_prompts, self.chat._client)
 
         scoring.score_attacks(attack_prompts)
         df = visualization.build_dataframe(attack_prompts)
