@@ -44,22 +44,6 @@ class Detector(str, Enum):
     SECRETS = "secrets"
 
 
-def get_detector_api_path(detector: Detector) -> str:
-    match detector:
-        case Detector.ALLOWED_TOPICS:
-            return "v1/detect/topics/allowed"
-        case Detector.BANNED_TOPICS:
-            return "v1/detect/topics/banned"
-        case Detector.PROMPT_INJECTION:
-            return "v1/detect/prompt_injection"
-        case Detector.KEYWORDS:
-            return "v1/detect/keywords"
-        case Detector.SECRETS:
-            return "v1/detect/secrets"
-        case Detector.PII:
-            return "v1/detect/pii"
-
-
 class Endpoint(Enum):
     ZENGUARD = "zenguard"
     OPENAI = "openai"
@@ -89,18 +73,21 @@ class ZenGuard:
             raise ValueError(f"LLM {config.llm} is not supported")
 
     def detect(self, detectors: list[Detector], prompt: str):
-        if len(detectors) == 0:
-            return {"error": "No detectors were provided"}
-
         try:
+            if detectors:
+                assert self.update_detectors(detectors) is None
+
             response = httpx.post(
-                self._backend + get_detector_api_path(detectors[0]),
-                json={"message": prompt},
+                self._backend + "v1/detect",
+                json={"message": prompt, "in_parallel": True},
                 headers={"x-api-key": self._api_key},
-                timeout=3,
+                timeout=50,
             )
         except httpx.RequestError as e:
             return {"error": str(e)}
+
+        if response.status_code != 200:
+            return {"error": response.json()}
 
         return response.json()
 
@@ -139,7 +126,7 @@ class ZenGuard:
         try:
             response = httpx.put(
                 self._backend + "v1/detectors/update/",
-                params={"detectors": detectors},
+                params={"detectors": [detector.value for detector in detectors]},
                 headers={"x-api-key": self._api_key},
                 timeout=3,
             )
@@ -148,36 +135,3 @@ class ZenGuard:
 
         if response.status_code != 200:
             return {"error": str(response.json())}
-
-    def detect_in_parallel(self, prompt: str):
-        try:
-            response = httpx.post(
-                self._backend + "v1/detect",
-                json={"message": prompt, "in_parallel": True},
-                headers={"x-api-key": self._api_key},
-                timeout=10,
-            )
-        except httpx.RequestError as e:
-            return {"error": str(e)}
-
-        if response.status_code != 200:
-            return {"error": response.json()}
-
-        return response.json()
-
-    def detect_sequentially(self, prompt: str):
-        try:
-            response = httpx.post(
-                self._backend + "v1/detect",
-                json={"message": prompt, "in_parallel": False},
-                headers={"x-api-key": self._api_key},
-                timeout=10,
-            )
-        except httpx.RequestError as e:
-            return {"error": str(e)}
-
-        if response.status_code != 200:
-            return {"error": response.json()}
-
-        return response.json()
-

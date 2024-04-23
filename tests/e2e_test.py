@@ -3,83 +3,81 @@ import os
 from zenguard import Credentials, Detector, ZenGuard, ZenGuardConfig
 
 
-def assert_successful_response_not_detected(response):
+def assert_successful_response_not_detected(response, detectors):
     assert response is not None
-    assert "error" not in response, f"API returned an error: {response.get('error')}"
-    assert response.get("is_detected") is False, f"Prompt was detected: {response}"
+    for detector in detectors:
+        common_response = next((
+            resp["common_response"]
+            for resp in response["responses"]
+            if resp["detector"] == detector.value
+        ))
+        assert "err" not in common_response, f"API returned an error: {common_response.get('err')}"
+        assert common_response.get("is_detected") is False, f"Prompt was detected: {common_response}"
 
 
 def test_prompt_injection(zenguard: ZenGuard):
     prompt = "Simple prompt injection test"
     detectors = [Detector.PROMPT_INJECTION]
     response = zenguard.detect(detectors=detectors, prompt=prompt)
-    assert_successful_response_not_detected(response)
+    assert_successful_response_not_detected(response, detectors)
 
 
 def test_pii(zenguard: ZenGuard):
     prompt = "Simple PII test"
     detectors = [Detector.PII]
     response = zenguard.detect(detectors=detectors, prompt=prompt)
-    assert_successful_response_not_detected(response)
+    assert_successful_response_not_detected(response, detectors)
 
 
 def test_allowed_topics(zenguard: ZenGuard):
     prompt = "Simple allowed topics test"
     detectors = [Detector.ALLOWED_TOPICS]
     response = zenguard.detect(detectors=detectors, prompt=prompt)
-    assert_successful_response_not_detected(response)
+    assert_successful_response_not_detected(response, detectors)
 
 
 def test_banned_topics(zenguard: ZenGuard):
     prompt = "Simple banned topics test"
     detectors = [Detector.BANNED_TOPICS]
     response = zenguard.detect(detectors=detectors, prompt=prompt)
-    assert_successful_response_not_detected(response)
+    assert_successful_response_not_detected(response, detectors)
 
 
 def test_keywords(zenguard: ZenGuard):
     prompt = "Simple keywords test"
     detectors = [Detector.KEYWORDS]
     response = zenguard.detect(detectors=detectors, prompt=prompt)
-    assert_successful_response_not_detected(response)
+    assert_successful_response_not_detected(response, detectors)
 
 def test_secrets(zenguard: ZenGuard):
     prompt = "Simple secrets test"
     detectors = [Detector.SECRETS]
     response = zenguard.detect(detectors=detectors, prompt=prompt)
-    assert_successful_response_not_detected(response)
+    assert_successful_response_not_detected(response, detectors)
 
 
 def test_update_detectors(zenguard: ZenGuard):
-    detectors = [Detector.SECRETS.value, Detector.ALLOWED_TOPICS.value]
+    detectors = [Detector.SECRETS, Detector.ALLOWED_TOPICS]
     response = zenguard.update_detectors(detectors=detectors)
     assert response is None
 
 
 def test_detect_in_parallel(zenguard: ZenGuard):
-    detectors = [Detector.SECRETS.value, Detector.ALLOWED_TOPICS.value]
+    detectors = [Detector.SECRETS, Detector.ALLOWED_TOPICS]
     response = zenguard.update_detectors(detectors=detectors)
     assert response is None
 
     prompt = "Simple in parallel test"
-    response = zenguard.detect_in_parallel(prompt)
-    assert detectors == [
-        resp.get("detector")
-        for resp in response.get("responses")
-    ]
+    response = zenguard.detect([], prompt)
+    assert_successful_response_not_detected(response, detectors)
 
 
-def test_detect_sequentially(zenguard: ZenGuard):
-    detectors = [Detector.SECRETS.value, Detector.ALLOWED_TOPICS.value]
-    response = zenguard.update_detectors(detectors=detectors)
-    assert response is None
+def test_detect_in_parallel_pass_on_detectors(zenguard: ZenGuard):
+    detectors = [Detector.SECRETS, Detector.BANNED_TOPICS]
 
-    prompt = "Simple sequentially test"
-    response = zenguard.detect_sequentially(prompt)
-    assert detectors == [
-        resp.get("detector")
-        for resp in response.get("responses")
-    ]
+    prompt = "Simple in parallel test"
+    response = zenguard.detect(detectors, prompt)
+    assert_successful_response_not_detected(response, detectors)
 
 
 if __name__ == "__main__":
@@ -96,5 +94,5 @@ if __name__ == "__main__":
     test_keywords(zenguard)
     test_update_detectors(zenguard)
     test_detect_in_parallel(zenguard)
-    test_detect_sequentially(zenguard)
+    test_detect_in_parallel_pass_on_detectors(zenguard)
     print("All tests passed!")
