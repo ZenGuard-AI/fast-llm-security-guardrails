@@ -74,20 +74,17 @@ class ZenGuard:
 
     def detect(self, detectors: list[Detector], prompt: str):
         try:
-            if detectors:
-                assert self.update_detectors(detectors) is None
-
             response = httpx.post(
                 self._backend + "v1/detect",
-                json={"messages": [prompt], "in_parallel": True},
+                json={"messages": [prompt], "in_parallel": True, "detectors": detectors},
                 headers={"x-api-key": self._api_key},
-                timeout=50,
+                timeout=5,
             )
         except httpx.RequestError as e:
             return {"error": str(e)}
 
         if response.status_code != 200:
-            return {"error": response.json()}
+            return {"error": str(response.json())}
 
         return response.json()
 
