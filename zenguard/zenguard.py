@@ -11,13 +11,8 @@ from openai import OpenAI
 from tqdm import tqdm
 
 from zenguard.ai_clients.openai import ChatWithZenguard
-from zenguard.pentest.prompt_injections import (
-    config,
-    prompting,
-    run,
-    scoring,
-    visualization,
-)
+from zenguard.pentest.prompt_injections import (config, prompting, run,
+                                                scoring, visualization)
 
 
 class SupportedLLMs:
@@ -44,6 +39,7 @@ class Detector(str, Enum):
     KEYWORDS = "keywords"
     PII = "pii"
     SECRETS = "secrets"
+    TOXICITY = "toxicity"
 
 
 class Endpoint(Enum):

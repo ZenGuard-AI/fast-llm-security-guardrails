@@ -1,4 +1,3 @@
-
 from zenguard.zenguard import Detector
 
 
@@ -48,6 +47,7 @@ def test_keywords(zenguard):
     response = zenguard.detect(detectors=detectors, prompt=prompt)
     assert_successful_response_not_detected(response, detectors)
 
+
 def test_secrets(zenguard):
     prompt = "Simple secrets test"
     detectors = [Detector.SECRETS]
@@ -76,4 +76,11 @@ def test_detect_in_parallel_pass_on_detectors(zenguard):
 
     prompt = "Simple in parallel test"
     response = zenguard.detect(detectors, prompt)
+    assert_successful_response_not_detected(response, detectors)
+
+
+def test_toxicity(zenguard):
+    prompt = "Simple toxicity test"
+    detectors = [Detector.TOXICITY]
+    response = zenguard.detect(detectors=detectors, prompt=prompt)
     assert_successful_response_not_detected(response, detectors)
