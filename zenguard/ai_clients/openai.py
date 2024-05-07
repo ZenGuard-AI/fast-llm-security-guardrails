@@ -68,21 +68,23 @@ class CompletionsWithZenguard(Completions):
         extra_body: Optional[Body] = None,
         timeout: Union[float, httpx.Timeout, None, NotGiven] = NOT_GIVEN,
     ):
-        detect_response = None
         for message in messages:
             if (
                 ("role" in message and message["role"] == "user") and
                 ("content" in message and type(message["content"]) == str and message["content"] != "")
             ):
-                detect_response = self._zenguard.detect(detectors=detectors, prompt=message["content"])
-                if "error" in detect_response:
-                    return detect_response
-                if detect_response["is_detected"] is True:
-                    if (
-                        ("block" in detect_response and len(detect_response["block"]) > 0) or
-                        ("score" in detect_response and detect_response["score"] == MALICIOUS_PROMPT_SCORE)
-                    ):
-                        return detect_response
+                detectors_response = self._zenguard.detect(detectors=detectors, prompt=message["content"])
+
+                if not detectors_response["responses"]:
+                    continue
+
+                for detect_response in detectors_response["responses"]:
+                    if detect_response["err"]:
+                        return detectors_response
+
+                if detectors_response["dangerous_detectors"]:
+                    return detectors_response
+
         return super().create(
             messages=messages,
             model=model,

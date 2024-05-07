@@ -32,14 +32,14 @@ class ZenGuardConfig:
     llm: Optional[SupportedLLMs] = None
 
 
-class Detector(Enum):
-    PROMPT_INJECTION = "v1/detect/prompt_injection"
-    PII = "v1/detect/pii"
-    ALLOWED_TOPICS = "v1/detect/topics/allowed"
-    BANNED_TOPICS = "v1/detect/topics/banned"
-    KEYWORDS = "v1/detect/keywords"
-    SECRETS = "v1/detect/secrets"
-    TOXICITY = "v1/detect/toxicity"
+class Detector(str, Enum):
+    ALLOWED_TOPICS = "allowed_subjects"
+    BANNED_TOPICS = "banned_subjects"
+    PROMPT_INJECTION = "prompt_injection"
+    KEYWORDS = "keywords"
+    PII = "pii"
+    SECRETS = "secrets"
+    TOXICITY = "toxicity"
 
 
 class Endpoint(Enum):
@@ -69,17 +69,18 @@ class ZenGuard:
             raise ValueError(f"LLM {config.llm} is not supported")
 
     def detect(self, detectors: list[Detector], prompt: str):
-        if len(detectors) == 0:
-            return {"error": "No detectors were provided"}
         try:
             response = httpx.post(
-                self._backend + detectors[0].value,
-                json={"messages": [prompt]},
+                self._backend + "v1/detect",
+                json={"messages": [prompt], "in_parallel": True, "detectors": detectors},
                 headers={"x-api-key": self._api_key},
-                timeout=3,
+                timeout=5,
             )
         except httpx.RequestError as e:
             return {"error": str(e)}
+
+        if response.status_code != 200:
+            return {"error": str(response.json())}
 
         return response.json()
 
@@ -110,3 +111,20 @@ class ZenGuard:
         scoring.score_attacks(attack_prompts)
         df = visualization.build_dataframe(attack_prompts)
         print(scoring.get_metrics(df, "Attack Instruction"))
+
+    def update_detectors(self, detectors: list[Detector]):
+        if len(detectors) == 0:
+            return {"error": "No detectors were provided"}
+
+        try:
+            response = httpx.put(
+                self._backend + "v1/detectors/update/",
+                params={"detectors": [detector.value for detector in detectors]},
+                headers={"x-api-key": self._api_key},
+                timeout=3,
+            )
+        except httpx.RequestError as e:
+            return {"error": str(e)}
+
+        if response.status_code != 200:
+            return {"error": str(response.json())}
