@@ -54,6 +54,12 @@ def test_secrets(zenguard):
     response = zenguard.detect(detectors=detectors, prompt=prompt)
     assert_successful_response_not_detected(response, detectors)
 
+def test_toxicity(zenguard):
+    prompt = "Simple toxicity test"
+    detectors = [Detector.TOXICITY]
+    response = zenguard.detect(detectors=detectors, prompt=prompt)
+    assert_successful_response_not_detected(response, detectors)
+
 
 def test_update_detectors(zenguard):
     detectors = [Detector.SECRETS, Detector.ALLOWED_TOPICS]
@@ -68,7 +74,7 @@ def test_detect_in_parallel(zenguard):
 
     prompt = "Simple in parallel test"
     response = zenguard.detect([], prompt)
-    assert_successful_response_not_detected(response, detectors)
+    assert "No detectors" in response["error"]
 
 
 def test_detect_in_parallel_pass_on_detectors(zenguard):
@@ -77,10 +83,4 @@ def test_detect_in_parallel_pass_on_detectors(zenguard):
     prompt = "Simple in parallel test"
     response = zenguard.detect(detectors, prompt)
     assert_successful_response_not_detected(response, detectors)
-
-
-def test_toxicity(zenguard):
-    prompt = "Simple toxicity test"
-    detectors = [Detector.TOXICITY]
-    response = zenguard.detect(detectors=detectors, prompt=prompt)
-    assert_successful_response_not_detected(response, detectors)
+    assert "error" not in response
