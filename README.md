@@ -98,7 +98,7 @@ if __name__ == "__main__":
     if not api_key or not openai_api_key:
         raise ValueError("API keys are not set")
 
-    config = ZenGuardConfig(credentials=Credentials(api_key=api_key, llm_api_key=opena_api_key), llm=SupporedLLMs.CHATGPT)
+    config = ZenGuardConfig(credentials=Credentials(api_key=api_key, llm_api_key=openai_api_key), llm=SupporedLLMs.CHATGPT)
     zenguard = ZenGuard(config=config)
     zenguard.pentest(endpoint=Endpoint.ZENGUARD, detector=Detector.PROMPT_INJECTION)
     zenguard.pentest(endpoint=Endpoint.OPENAI, detector=Detector.PROMPT_INJECTION)
