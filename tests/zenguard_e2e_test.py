@@ -68,13 +68,13 @@ def test_toxicity(zenguard):
     assert_successful_response_not_detected(response)
 
 
-def IGNORE_test_update_detectors(zenguard):
+def test_update_detectors(zenguard):
     detectors = [Detector.SECRETS, Detector.ALLOWED_TOPICS]
     response = zenguard.update_detectors(detectors=detectors)
     assert response is None
 
 
-def IGNORE_test_detect_in_parallel(zenguard):
+def test_detect_in_parallel(zenguard):
     detectors = [Detector.SECRETS, Detector.ALLOWED_TOPICS]
     response = zenguard.update_detectors(detectors=detectors)
     assert response is None
@@ -84,7 +84,7 @@ def IGNORE_test_detect_in_parallel(zenguard):
     assert "No detectors" in response["error"]
 
 
-def IGNORE_test_detect_in_parallel_pass_on_detectors(zenguard):
+def test_detect_in_parallel_pass_on_detectors(zenguard):
     detectors = [Detector.SECRETS, Detector.BANNED_TOPICS]
 
     prompt = "Simple in parallel test"
