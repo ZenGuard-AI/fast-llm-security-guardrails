@@ -109,7 +109,6 @@ class ZenGuard:
         else:
             url += "v1/detect"
             json = {"messages": [prompt], "in_parallel": True, "detectors": detectors}
-            print(detectors)
 
         try:
             response = httpx.post(
@@ -126,7 +125,6 @@ class ZenGuard:
             print(response.json())
             return {"error": str(response.json())}
 
-        print(response.json())
         return response.json()
 
     def _attack_zenguard(self, detector: Detector, attacks: list[str]):
