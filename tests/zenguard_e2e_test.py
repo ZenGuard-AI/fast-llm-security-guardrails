@@ -111,7 +111,7 @@ def test_detect_error_no_detectors(zenguard):
 
 
 def test_report_with_valid_detector_and_days(zenguard):
-    with patch("httpx.post") as mock_post:
+    with patch("httpx.get") as mock_post:
         mock_response = Mock()
         # TODO(baur): Update this to the actual response
         mock_response.json.return_value = {"prompt_injections": 10}
@@ -124,7 +124,7 @@ def test_report_with_valid_detector_and_days(zenguard):
 
         # Assert only the relevant parts of the API call
         assert API_REPORT_PROMPT_INJECTIONS in mock_post_args[0]
-        assert mock_post_kwargs["json"] == {"days": 7}
+        assert mock_post_kwargs["params"] == {"days": 7}
 
 
 def test_report_with_invalid_detector(zenguard):
@@ -133,7 +133,7 @@ def test_report_with_invalid_detector(zenguard):
 
 
 def test_report_with_request_error(zenguard):
-    with patch("httpx.post") as mock_post:
+    with patch("httpx.get") as mock_post:
         mock_post.side_effect = httpx.RequestError("Connection error")
 
         with pytest.raises(RuntimeError) as exc_info:
