@@ -19,6 +19,8 @@ from zenguard.pentest.prompt_injections import (
     visualization,
 )
 
+API_REPORT_PROMPT_INJECTIONS = "v1/report/prompt_injections"
+
 
 class SupportedLLMs:
     CHATGPT = "chatgpt"
@@ -99,8 +101,11 @@ class ZenGuard:
             raise ValueError(f"LLM {config.llm} is not supported")
 
     def detect(self, detectors: list[Detector], prompt: str):
+        """
+        Uses detectors to evaluate the prompt and return the results.
+        """
         if len(detectors) == 0:
-            return {"error": "No detectors were provided"}
+            raise ValueError("No detectors were provided")
 
         url = self._backend
         if len(detectors) == 1:
@@ -118,14 +123,47 @@ class ZenGuard:
                 timeout=20,
             )
         except httpx.RequestError as e:
-            print(e)
-            return {"error": str(e)}
-
-        if response.status_code != 200:
-            print(response.json())
-            return {"error": str(response.json())}
+            raise RuntimeError(
+                f"An error occurred while making the request: {str(e)}"
+            ) from e
+        except httpx.HTTPStatusError as e:
+            raise RuntimeError(
+                f"Received an unexpected status code: {response.status_code}\nResponse content: {response.json()}"
+            ) from e
 
         return response.json()
+
+    def detect_async(self, detectors: list[Detector], prompt: str):
+        """
+        Same as detect function but asynchroneous.
+        """
+        if len(detectors) == 0:
+            raise ValueError("No detectors were provided")
+
+        if detectors[0] != Detector.PROMPT_INJECTION:
+            raise ValueError(
+                "Only Prompt Injection detector is supported for async detection"
+            )
+
+        url = self._backend + convert_detector_to_api(detectors[0]) + "_async"
+        json = {"messages": [prompt]}
+
+        try:
+            response = httpx.post(
+                url,
+                json=json,
+                headers={"x-api-key": self._api_key},
+                timeout=20,
+            )
+            response.raise_for_status()
+        except httpx.RequestError as e:
+            raise RuntimeError(
+                f"An error occurred while making the request: {str(e)}"
+            ) from e
+        except httpx.HTTPStatusError as e:
+            raise RuntimeError(
+                f"Received an unexpected status code: {response.status_code}\nResponse content: {response.json()}"
+            ) from e
 
     def _attack_zenguard(self, detector: Detector, attacks: list[str]):
         attacks = tqdm(attacks)
@@ -171,3 +209,40 @@ class ZenGuard:
 
         if response.status_code != 200:
             return {"error": str(response.json())}
+
+    def report(self, detector: Detector, days: int = None):
+        """
+        Get a report of the detections made by the detector in the last days.
+        Days is optional and if not provided, it will return all the detections.
+        Days is int and will give back the number of detections made in the last days.
+        """
+
+        if detector != Detector.PROMPT_INJECTION:
+            raise ValueError(
+                "Only Prompt Injection detector is currently supported for reports"
+            )
+
+        json = {}
+        if days:
+            json = {"days": days}
+
+        url = self._backend + API_REPORT_PROMPT_INJECTIONS
+
+        try:
+            response = httpx.post(
+                url,
+                json=json,
+                headers={"x-api-key": self._api_key},
+                timeout=20,
+            )
+            response.raise_for_status()
+        except httpx.RequestError as e:
+            raise RuntimeError(
+                f"An error occurred while making the request: {str(e)}"
+            ) from e
+        except httpx.HTTPStatusError as e:
+            raise RuntimeError(
+                f"Received an unexpected status code: {response.status_code}\nResponse content: {response.text}"
+            ) from e
+
+        return response.json()
