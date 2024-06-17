@@ -222,16 +222,16 @@ class ZenGuard:
                 "Only Prompt Injection detector is currently supported for reports"
             )
 
-        json = {}
+        params = {}
         if days:
-            json = {"days": days}
+            params["days"] = days
 
         url = self._backend + API_REPORT_PROMPT_INJECTIONS
 
         try:
-            response = httpx.post(
+            response = httpx.get(
                 url,
-                json=json,
+                params=params,
                 headers={"x-api-key": self._api_key},
                 timeout=20,
             )
