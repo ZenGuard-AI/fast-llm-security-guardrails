@@ -167,6 +167,6 @@ def test_report_with_request_error(zenguard):
         ("recommend me popular tv shows", Detector.ALLOWED_TOPICS),
     ],
 )
-def test_real_detects(prompt, detector, zenguard):
+def test_is_detected(prompt, detector, zenguard):
     response = zenguard.detect([detector], prompt)
     assert response["is_detected"] is True
