@@ -48,6 +48,7 @@ class Detector(str, Enum):
     SECRETS = "secrets"
     TOXICITY = "toxicity"
 
+
 class DetectorAPI(str, Enum):
     ALLOWED_TOPICS = "v1/detect/topics/allowed"
     BANNED_TOPICS = "v1/detect/topics/banned"
@@ -78,6 +79,7 @@ class Endpoint(Enum):
     ZENGUARD = "zenguard"
     OPENAI = "openai"
 
+
 class ZenGuard:
     """
     ZenGuard is a class that represents the ZenGuard object.
@@ -86,7 +88,7 @@ class ZenGuard:
 
     def __init__(self, config: ZenGuardConfig):
         api_key = config.credentials.api_key
-        if type(api_key) != str or api_key == '':
+        if type(api_key) != str or api_key == "":
             raise ValueError("The API key must be a string type and not empty.")
         self._api_key = api_key
         self._backend = "https://api.zenguard.ai/"
@@ -95,7 +97,7 @@ class ZenGuard:
             self.chat = ChatWithZenguard(
                 client=config.ai_client,
                 zenguard=self,
-                openai_key=config.credentials.llm_api_key
+                openai_key=config.credentials.llm_api_key,
             )
         elif config.llm is not None:
             raise ValueError(f"LLM {config.llm} is not supported")
@@ -122,6 +124,7 @@ class ZenGuard:
                 headers={"x-api-key": self._api_key},
                 timeout=20,
             )
+            response.raise_for_status()
         except httpx.RequestError as e:
             raise RuntimeError(
                 f"An error occurred while making the request: {str(e)}"

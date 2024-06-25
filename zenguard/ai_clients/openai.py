@@ -5,7 +5,12 @@ from openai import NOT_GIVEN, NotGiven, OpenAI
 from openai.resources.chat import Chat
 from openai.resources.chat.completions import Completions
 from openai._types import Body, Query, Headers
-from openai.types.chat import completion_create_params, ChatCompletionToolParam, ChatCompletionToolChoiceOptionParam, ChatCompletionMessageParam
+from openai.types.chat import (
+    completion_create_params,
+    ChatCompletionToolParam,
+    ChatCompletionToolChoiceOptionParam,
+    ChatCompletionMessageParam,
+)
 from openai._compat import cached_property
 
 
@@ -16,7 +21,7 @@ class CompletionsWithZenguard(Completions):
     def __init__(self, client: OpenAI, zenguard) -> None:
         self._zenguard = zenguard
         super().__init__(client)
-    
+
     @override
     def create(
         self,
@@ -45,15 +50,21 @@ class CompletionsWithZenguard(Completions):
                 "gpt-3.5-turbo-16k-0613",
             ],
         ],
-        frequency_penalty: Union[Optional[float],NotGiven] = NOT_GIVEN,
-        function_call: Union[completion_create_params.FunctionCall, NotGiven] = NOT_GIVEN,
-        functions: Union[Iterable[completion_create_params.Function], NotGiven] = NOT_GIVEN,
+        frequency_penalty: Union[Optional[float], NotGiven] = NOT_GIVEN,
+        function_call: Union[
+            completion_create_params.FunctionCall, NotGiven
+        ] = NOT_GIVEN,
+        functions: Union[
+            Iterable[completion_create_params.Function], NotGiven
+        ] = NOT_GIVEN,
         logit_bias: Union[Optional[Dict[str, int]], NotGiven] = NOT_GIVEN,
         logprobs: Union[Optional[bool], NotGiven] = NOT_GIVEN,
         max_tokens: Union[Optional[int], NotGiven] = NOT_GIVEN,
         n: Union[Optional[int], NotGiven] = NOT_GIVEN,
         presence_penalty: Union[Optional[float], NotGiven] = NOT_GIVEN,
-        response_format: Union[completion_create_params.ResponseFormat, NotGiven] = NOT_GIVEN,
+        response_format: Union[
+            completion_create_params.ResponseFormat, NotGiven
+        ] = NOT_GIVEN,
         seed: Union[Optional[int], NotGiven] = NOT_GIVEN,
         stop: Union[Optional[str], List[str], NotGiven] = NOT_GIVEN,
         stream: Union[Optional[Literal[False]], NotGiven] = NOT_GIVEN,
@@ -69,11 +80,14 @@ class CompletionsWithZenguard(Completions):
         timeout: Union[float, httpx.Timeout, None, NotGiven] = NOT_GIVEN,
     ):
         for message in messages:
-            if (
-                ("role" in message and message["role"] == "user") and
-                ("content" in message and type(message["content"]) == str and message["content"] != "")
+            if ("role" in message and message["role"] == "user") and (
+                "content" in message
+                and type(message["content"]) == str
+                and message["content"] != ""
             ):
-                detectors_response = self._zenguard.detect(detectors=detectors, prompt=message["content"])
+                detectors_response = self._zenguard.detect(
+                    detectors=detectors, prompt=message["content"]
+                )
 
                 if not detectors_response["responses"]:
                     continue
@@ -112,6 +126,7 @@ class CompletionsWithZenguard(Completions):
             timeout=timeout,
         )
 
+
 class ChatWithZenguard(Chat):
     def __init__(self, client: OpenAI, zenguard, openai_key: str) -> None:
         self._zenguard = zenguard
@@ -125,4 +140,3 @@ class ChatWithZenguard(Chat):
     @cached_property
     def completions(self) -> CompletionsWithZenguard:
         return CompletionsWithZenguard(self._client, self._zenguard)
-    
