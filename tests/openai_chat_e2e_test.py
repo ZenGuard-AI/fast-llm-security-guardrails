@@ -1,9 +1,9 @@
-
 from openai.types.chat import ChatCompletion
 from zenguard.zenguard import Detector
 
 MALICIOUS_PROMPT_SCORE = 1
 TEST_GPT_MODEL = "gpt-3.5-turbo"
+
 
 def assert_succesfull_create_chat_completion(response):
     assert response is not None
@@ -27,6 +27,9 @@ def test_create_completion_with_PI_prompt_failure(zenguard_openai):
         messages=[{"role": "user", "content": prompt}],
         model=TEST_GPT_MODEL,
     )
+    assert not isinstance(
+        response, ChatCompletion
+    ), "ZenGuard not detected Prompt Injection"
     detect_response = response["responses"][0]
     assert detect_response
     assert "err" not in detect_response["common_response"]
