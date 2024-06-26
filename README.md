@@ -6,7 +6,7 @@
 
 # ZenGuard AI
 
-ZenGuard AI enables AI developers to integrate production-level, low-code LLM (Large Language Model) guardrails into their generative AI applications effortlessly. With ZenGuard AI, ensure your application operates within trusted boundaries, is protected from prompt injections, and maintains user privacy without compromising on performance.
+ZenGuard AI enables AI developers to integrate ultra-fast, production-level LLM guardrails into their generative AI applications effortlessly. With ZenGuard AI, ensure your application operates within trusted boundaries, is protected from prompt injections, and maintains user privacy without compromising on performance.
 
 # Features
 
@@ -34,6 +34,9 @@ pip install zenguard
 ## Getting Started
 
 Jump into our [Quickstart Guide](https://docs.zenguard.ai) to easily integrate ZenGuard AI into your application.
+
+Integration with [LangChain](https://python.langchain.com/v0.2/docs/integrations/tools/zenguard/)
+Integration with [LlamaIndex](https://llamahub.ai/l/llama-packs/llama-index-packs-zenguard?from=llama-packs)
 
 # ZenGuard Playground
 
