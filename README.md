@@ -4,6 +4,8 @@
 ![image](https://github.com/ZenGuard-AI/easy-llm-security/assets/2197820/dd842a17-99b5-4158-a8f5-af8cdebe4f02)
 
 
+
+
 # ZenGuard AI
 
 ZenGuard AI enables AI developers to integrate ultra-fast, production-level LLM guardrails into their generative AI applications effortlessly. With ZenGuard AI, ensure your application operates within trusted boundaries, is protected from prompt injections, and maintains user privacy without compromising on performance.
@@ -35,8 +37,9 @@ pip install zenguard
 
 Jump into our [Quickstart Guide](https://docs.zenguard.ai) to easily integrate ZenGuard AI into your application.
 
-Integration with [LangChain](https://python.langchain.com/v0.2/docs/integrations/tools/zenguard/)
-Integration with [LlamaIndex](https://llamahub.ai/l/llama-packs/llama-index-packs-zenguard?from=llama-packs)
+Integration with [LangChain](https://python.langchain.com/v0.2/docs/integrations/tools/zenguard/) <a href="https://colab.research.google.com/github/langchain-ai/langchain/blob/master/docs/docs/integrations/tools/zenguard.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open LangChain Integration in Colab" /></a>
+
+Integration with [LlamaIndex](https://llamahub.ai/l/llama-packs/llama-index-packs-zenguard?from=llama-packs) 
 
 # ZenGuard Playground
 
