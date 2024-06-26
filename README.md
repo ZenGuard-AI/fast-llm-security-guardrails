@@ -1,5 +1,5 @@
 <a href="https://docs.zenguard.ai/" target="_blank"><img src="https://img.shields.io/badge/docs-view-green" alt="Documentation"></a>
-[![ZenGuard SDK CI](https://github.com/ZenGuard-AI/zenguard-ai/actions/workflows/github-actions.yaml/badge.svg)](https://github.com/ZenGuard-AI/zenguard-ai/actions/workflows/github-actions.yaml) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT) [![PyPI version](https://img.shields.io/pypi/v/zenguard)](https://pypi.org/project/zenguard/)
+[![ZenGuard SDK CI](https://github.com/ZenGuard-AI/zenguard-ai/actions/workflows/github-actions.yaml/badge.svg)](https://github.com/ZenGuard-AI/zenguard-ai/actions/workflows/github-actions.yaml) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT) [![PyPI version](https://img.shields.io/pypi/v/zenguard)](https://pypi.org/project/zenguard/)  <a href="[https://colab.research.google.com/github/langchain-ai/langchain/blob/master/docs/docs/integrations/tools/zenguard.ipynb](https://colab.research.google.com/github/ZenGuard-AI/fast-llm-security-guardrails/blob/main/docs/colabs/zenguard_library.ipynb)" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" /></a>
 
 ![image](https://github.com/ZenGuard-AI/easy-llm-security/assets/2197820/dd842a17-99b5-4158-a8f5-af8cdebe4f02)
 
@@ -39,7 +39,8 @@ Jump into our [Quickstart Guide](https://docs.zenguard.ai) to easily integrate Z
 
 Integration with [LangChain](https://python.langchain.com/v0.2/docs/integrations/tools/zenguard/) <a href="https://colab.research.google.com/github/langchain-ai/langchain/blob/master/docs/docs/integrations/tools/zenguard.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open LangChain Integration in Colab" /></a>
 
-Integration with [LlamaIndex](https://llamahub.ai/l/llama-packs/llama-index-packs-zenguard?from=llama-packs) 
+Integration with [LlamaIndex](https://llamahub.ai/l/llama-packs/llama-index-packs-zenguard?from=llama-packs) <a href="https://colab.research.google.com/github/run-llama/llama_index/blob/main/llama-index-packs/llama-index-packs-zenguard/examples/zenguard.ipynb" target=_parent><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open LlamaIndex Integration In Colab"></a>
+
 
 # ZenGuard Playground
 
