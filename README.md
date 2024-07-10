@@ -50,6 +50,18 @@ Test the capabilities of ZenGuard AI in our ZenGuard [Playground](https://consol
 
 A more detailed documentation is available at [docs.zenguard.ai](https://docs.zenguard.ai/).
 
+## Detectors
+
+Try detectors functionality in Google Colab
+
+* **Prompt Injection Detection**: <a href="https://colab.research.google.com/github/ZenGuard-AI/fast-llm-security-guardrails/blob/main/docs/colabs/zenguard_library.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+* **Personally Identifiable Information (PII) Detection**: <a href="https://colab.research.google.com/github/ZenGuard-AI/fast-llm-security-guardrails/blob/main/docs/colabs/pii.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+* **Allowed Topics Detection**: <a href="https://colab.research.google.com/github/ZenGuard-AI/fast-llm-security-guardrails/blob/main/docs/colabs/allowed_topics.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+* **Banned Topics Detection**: <a href="https://colab.research.google.com/github/ZenGuard-AI/fast-llm-security-guardrails/blob/main/docs/colabs/banned_topics.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+* **Keywords Detection**: <a href="https://colab.research.google.com/github/ZenGuard-AI/fast-llm-security-guardrails/blob/main/docs/colabs/keywords.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+* **Secrets Detection**: <a href="https://colab.research.google.com/github/ZenGuard-AI/fast-llm-security-guardrails/blob/main/docs/colabs/secrets.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+* **Toxicity Detection**: <a href="https://colab.research.google.com/github/ZenGuard-AI/fast-llm-security-guardrails/blob/main/docs/colabs/toxicity.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
 
 # Penetration Testing
 
