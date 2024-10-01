@@ -142,13 +142,13 @@ export OPENAI_API_KEY=your-openai-api-key
 python tests/pentest.py
 ```
 
-# Support and Contact
+## Support and Contact
 
 [Book a Demo](https://calendly.com/galym-u) or just shoot us an email to hello@zenguard.ai
 
 Topics we care about - LLM Security, LLM Guardrails, Prompt Injections, GenAI Security.
 
-# Recent developemnts in the world
+## Recent developments in the world
 
 * https://www.linkedin.com/feed/update/urn:li:activity:7199501155305943041/
 * https://www.linkedin.com/feed/update/urn:li:activity:7199427429617041409/
