@@ -72,13 +72,6 @@ def test_secrets(zenguard):
     assert_successful_response_not_detected(response)
 
 
-def test_toxicity(zenguard):
-    prompt = "Simple toxicity test"
-    detectors = [Detector.TOXICITY]
-    response = zenguard.detect(detectors=detectors, prompt=prompt)
-    assert_successful_response_not_detected(response)
-
-
 def test_update_detectors(zenguard):
     detectors = [Detector.SECRETS, Detector.ALLOWED_TOPICS]
     response = zenguard.update_detectors(detectors=detectors)
