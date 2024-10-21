@@ -66,8 +66,8 @@ Try detectors functionality in Google Colab
 
 We offer tiered access to ZenGuard AI infrastructure, providing flexibility based on your needs. Currently, there are two available tiers:
 
-BASE – This default tier is free and operates with rate limits. Requests are served based on availability.
-DEDICATED – This high-performance tier supports a high volume of queries per second (QPS) and is accessible only with whitelisted API keys.
+* **BASE** – This default tier is free and operates with rate limits. Requests are served based on availability.
+* **DEDICATED** – This high-performance tier supports a high volume of queries per second (QPS) and is accessible only with whitelisted API keys.
 
 Enable DEDICATED tier:
 
