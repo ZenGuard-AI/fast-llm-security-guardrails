@@ -5,4 +5,5 @@ from zenguard.zenguard import (
     SupportedLLMs,
     ZenGuard,
     ZenGuardConfig,
+    Tier,
 )
