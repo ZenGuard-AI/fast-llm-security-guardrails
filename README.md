@@ -62,6 +62,23 @@ Try detectors functionality in Google Colab
 * **Secrets Detection**: <a href="https://colab.research.google.com/github/ZenGuard-AI/fast-llm-security-guardrails/blob/main/docs/colabs/secrets.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 * **Toxicity Detection**: <a href="https://colab.research.google.com/github/ZenGuard-AI/fast-llm-security-guardrails/blob/main/docs/colabs/toxicity.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
+## Tiers
+
+We offer tiered access to ZenGuard AI infrastructure, providing flexibility based on your needs. Currently, there are two available tiers:
+
+BASE – This default tier is free and operates with rate limits. Requests are served based on availability.
+DEDICATED – This high-performance tier supports a high volume of queries per second (QPS) and is accessible only with whitelisted API keys.
+
+Enable DEDICATED tier:
+
+```python
+from zenguard import Credentials, ZenGuard, ZenGuardConfig, Tier
+import os
+
+config = ZenGuardConfig(credentials=Credentials(api_key=os.environ.get("ZEN_API_KEY")), tier=Tier.DEDICATED)
+zenguard = ZenGuard(config=config)
+```
+
 
 # Penetration Testing
 
