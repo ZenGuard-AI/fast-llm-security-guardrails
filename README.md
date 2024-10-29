@@ -60,6 +60,23 @@ Try detectors functionality in Google Colab
 * **Keywords Detection**: <a href="https://colab.research.google.com/github/ZenGuard-AI/fast-llm-security-guardrails/blob/main/docs/colabs/keywords.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 * **Secrets Detection**: <a href="https://colab.research.google.com/github/ZenGuard-AI/fast-llm-security-guardrails/blob/main/docs/colabs/secrets.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
+## Tiers
+
+We offer tiered access to ZenGuard AI infrastructure, providing flexibility based on your needs. Currently, there are two available tiers:
+
+* **BASE** – This default tier falls under free trial plan and operates with rate limits. Requests are served based on availability.
+* **DEDICATED** – This high-performance tier supports a high volume of queries per second (QPS) and is enabled in [Standard Plan](https://zenguard.ai/#guardrails).
+
+Enable DEDICATED tier:
+
+```python
+from zenguard import Credentials, ZenGuard, ZenGuardConfig, Tier
+import os
+
+config = ZenGuardConfig(credentials=Credentials(api_key=os.environ.get("ZEN_API_KEY")), tier=Tier.DEDICATED)
+zenguard = ZenGuard(config=config)
+```
+
 
 # Penetration Testing
 
@@ -140,13 +157,13 @@ export OPENAI_API_KEY=your-openai-api-key
 python tests/pentest.py
 ```
 
-# Support and Contact
+## Support and Contact
 
 [Book a Demo](https://calendly.com/galym-u) or just shoot us an email to hello@zenguard.ai
 
 Topics we care about - LLM Security, LLM Guardrails, Prompt Injections, GenAI Security.
 
-# Recent developemnts in the world
+## Recent developments in the world
 
 * https://www.linkedin.com/feed/update/urn:li:activity:7199501155305943041/
 * https://www.linkedin.com/feed/update/urn:li:activity:7199427429617041409/

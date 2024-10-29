@@ -21,8 +21,13 @@ from zenguard.pentest.prompt_injections import (
 
 API_REPORT_PROMPT_INJECTIONS = "v1/report/prompt_injections"
 
+BASE_TIER_ENDPOINT = "https://api.zenguard.ai/"
 
-class SupportedLLMs:
+# Dedicated tier is not accessible if your API key is not whitelisted
+DEDICATED_TIER_ENDPOINT = "https://dedicated-tier.zenguard.ai/"
+
+
+class SupportedLLMs(str, Enum):
     CHATGPT = "chatgpt"
 
 
@@ -32,11 +37,17 @@ class Credentials:
     llm_api_key: Optional[str] = None
 
 
+class Tier(str, Enum):
+    BASE = "base"
+    DEDICATED = "dedicated"
+
+
 @dataclass
 class ZenGuardConfig:
     credentials: Credentials
     ai_client: Optional[OpenAI] = None
     llm: Optional[SupportedLLMs] = None
+    tier: Optional[Tier] = Tier.BASE
 
 
 class Detector(str, Enum):
@@ -88,7 +99,10 @@ class ZenGuard:
         if type(api_key) != str or api_key == "":
             raise ValueError("The API key must be a string type and not empty.")
         self._api_key = api_key
-        self._backend = "https://api.zenguard.ai/"
+
+        self._backend = BASE_TIER_ENDPOINT
+        if config.tier == Tier.DEDICATED:
+            self._backend = DEDICATED_TIER_ENDPOINT
 
         if config.llm == SupportedLLMs.CHATGPT:
             self.chat = ChatWithZenguard(
