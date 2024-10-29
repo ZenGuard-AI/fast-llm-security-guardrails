@@ -18,7 +18,6 @@ ZenGuard AI enables AI developers to integrate ultra-fast, production-level LLM 
 * **Allowed Topics Detection**: Enables your model/app to generate content within specified, permissible topics.
 * **Banned Topics Detection**: Prevents the model from producing content on prohibited subjects.
 * **Keywords Detection**: Allows filtering and sanitization of your application's requests and responses or content generation based on specific keywords.
-* **Toxicity Detection**: Evaluate the presence of toxic elements in the prompt. Its main goal is to detect and neutralize potentially harmful or offensive material, helping to uphold a safe and positive online environment.
 
 # Requirements
 
@@ -60,7 +59,6 @@ Try detectors functionality in Google Colab
 * **Banned Topics Detection**: <a href="https://colab.research.google.com/github/ZenGuard-AI/fast-llm-security-guardrails/blob/main/docs/colabs/banned_topics.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 * **Keywords Detection**: <a href="https://colab.research.google.com/github/ZenGuard-AI/fast-llm-security-guardrails/blob/main/docs/colabs/keywords.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 * **Secrets Detection**: <a href="https://colab.research.google.com/github/ZenGuard-AI/fast-llm-security-guardrails/blob/main/docs/colabs/secrets.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
-* **Toxicity Detection**: <a href="https://colab.research.google.com/github/ZenGuard-AI/fast-llm-security-guardrails/blob/main/docs/colabs/toxicity.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 ## Tiers
 
