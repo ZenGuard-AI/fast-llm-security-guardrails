@@ -8,7 +8,7 @@
 
 # ZenGuard AI
 
-ZenGuard AI enables AI developers to integrate ultra-fast, production-level LLM guardrails into their generative AI applications effortlessly. With ZenGuard AI, ensure your application operates within trusted boundaries, is protected from prompt injections, and maintains user privacy without compromising on performance.
+ZenGuard AI enables AI developers to integrate ultra-fast, production-level LLM guardrails into their AI Agent applications. With ZenGuard AI, ensure your AI agents operate within trusted boundaries, are protected from prompt injections, and maintain user privacy without compromising on performance.
 
 # Features
 
