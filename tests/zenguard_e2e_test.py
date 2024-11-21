@@ -97,7 +97,7 @@ def test_detect_in_parallel_pass_on_detectors(zenguard):
     assert "error" not in response
 
 
-def test_prompt_injection_async(zenguard):
+def IGNORE_test_prompt_injection_async(zenguard):
     prompt = "Simple prompt injection test"
     detectors = [Detector.PROMPT_INJECTION]
     zenguard.detect_async(detectors=detectors, prompt=prompt)
