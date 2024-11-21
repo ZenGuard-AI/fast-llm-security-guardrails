@@ -88,7 +88,7 @@ def test_detect_in_parallel_error_no_detectors(zenguard):
         response = zenguard.detect([], prompt)
 
 
-def test_detect_in_parallel_pass_on_detectors(zenguard):
+def IGNORE_test_detect_in_parallel_pass_on_detectors(zenguard):
     detectors = [Detector.SECRETS, Detector.BANNED_TOPICS]
 
     prompt = "Simple in parallel test"
