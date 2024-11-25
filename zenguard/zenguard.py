@@ -4,7 +4,7 @@ ZenGuard is a class that represents the ZenGuard object. It is used to connect t
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import Optional
+from typing import Any, Dict, Optional
 
 import httpx
 from openai import OpenAI
@@ -117,16 +117,18 @@ class ZenGuard:
         """
         Uses detectors to evaluate the prompt and return the results.
         """
+        if prompt.isspace() or prompt == "":
+            raise ValueError("Prompt must not be an empty string or whitespace string")
+        
         if len(detectors) == 0:
             raise ValueError("No detectors were provided")
 
-        url = self._backend
+        json: Dict[str, Any] = {"messages": [prompt]}
         if len(detectors) == 1:
-            url += convert_detector_to_api(detectors[0])
-            json = {"messages": [prompt]}
+            url = f"{self._backend}{convert_detector_to_api(detectors[0])}"
         else:
-            url += "v1/detect"
-            json = {"messages": [prompt], "in_parallel": True, "detectors": detectors}
+            url = f"{self._backend}v1/detect"
+            json["detectors"] = detectors
 
         try:
             response = httpx.post(
@@ -135,49 +137,21 @@ class ZenGuard:
                 headers={"x-api-key": self._api_key},
                 timeout=20,
             )
-            response.raise_for_status()
+            if response.status_code != 200:
+                raise RuntimeError(
+                    f"Received an unexpected status code: {response.status_code}\nResponse content: {response.json()}"
+                )
+            return response.json()
         except httpx.RequestError as e:
             raise RuntimeError(
                 f"An error occurred while making the request: {str(e)}"
             ) from e
-        except httpx.HTTPStatusError as e:
-            raise RuntimeError(
-                f"Received an unexpected status code: {response.status_code}\nResponse content: {response.json()}"
-            ) from e
-
-        return response.json()
 
     def detect_async(self, detectors: list[Detector], prompt: str):
         """
         Same as detect function but asynchroneous.
         """
-        if len(detectors) == 0:
-            raise ValueError("No detectors were provided")
-
-        if detectors[0] != Detector.PROMPT_INJECTION:
-            raise ValueError(
-                "Only Prompt Injection detector is supported for async detection"
-            )
-
-        url = self._backend + convert_detector_to_api(detectors[0]) + "_async"
-        json = {"messages": [prompt]}
-
-        try:
-            response = httpx.post(
-                url,
-                json=json,
-                headers={"x-api-key": self._api_key},
-                timeout=20,
-            )
-            response.raise_for_status()
-        except httpx.RequestError as e:
-            raise RuntimeError(
-                f"An error occurred while making the request: {str(e)}"
-            ) from e
-        except httpx.HTTPStatusError as e:
-            raise RuntimeError(
-                f"Received an unexpected status code: {response.status_code}\nResponse content: {response.json()}"
-            ) from e
+        return self.detect(detectors, prompt)
 
     def _attack_zenguard(self, detector: Detector, attacks: list[str]):
         attacks = tqdm(attacks)
