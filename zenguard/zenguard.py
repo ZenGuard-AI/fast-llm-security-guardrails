@@ -118,7 +118,7 @@ class ZenGuard:
         Uses detectors to evaluate the prompt and return the results.
         """
         if prompt.isspace() or prompt == "":
-            raise ValueError("Prompt must not be an empty string or whitespace string")
+            raise ValueError("Prompt can't be empty.")
         
         if len(detectors) == 0:
             raise ValueError("No detectors were provided")
