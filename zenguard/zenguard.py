@@ -147,12 +147,6 @@ class ZenGuard:
                 f"An error occurred while making the request: {str(e)}"
             ) from e
 
-    def detect_async(self, detectors: list[Detector], prompt: str):
-        """
-        Same as detect function but asynchroneous.
-        """
-        return self.detect(detectors, prompt)
-
     def _attack_zenguard(self, detector: Detector, attacks: list[str]):
         attacks = tqdm(attacks)
         for attack in attacks:

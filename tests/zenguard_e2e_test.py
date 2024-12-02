@@ -97,18 +97,6 @@ def test_detect_in_parallel_pass_on_detectors(zenguard):
     assert "error" not in response
 
 
-def test_prompt_injection_async(zenguard):
-    prompt = "Simple prompt injection test"
-    detectors = [Detector.PROMPT_INJECTION]
-    zenguard.detect_async(detectors=detectors, prompt=prompt)
-
-
-def test_detect_error_no_detectors(zenguard):
-    prompt = "Simple prompt injection test"
-    with pytest.raises(ValueError):
-        zenguard.detect_async([], prompt)
-
-
 def test_report_with_valid_detector_and_days(zenguard):
     with patch("httpx.get") as mock_post:
         mock_response = Mock()
