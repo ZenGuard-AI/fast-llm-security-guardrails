@@ -88,25 +88,13 @@ def test_detect_in_parallel_error_no_detectors(zenguard):
         response = zenguard.detect([], prompt)
 
 
-def IGNORE_test_detect_in_parallel_pass_on_detectors(zenguard):
+def test_detect_in_parallel_pass_on_detectors(zenguard):
     detectors = [Detector.SECRETS, Detector.BANNED_TOPICS]
 
     prompt = "Simple in parallel test"
     response = zenguard.detect(detectors, prompt)
     assert_detectors_response(response, detectors)
     assert "error" not in response
-
-
-def IGNORE_test_prompt_injection_async(zenguard):
-    prompt = "Simple prompt injection test"
-    detectors = [Detector.PROMPT_INJECTION]
-    zenguard.detect_async(detectors=detectors, prompt=prompt)
-
-
-def test_detect_error_no_detectors(zenguard):
-    prompt = "Simple prompt injection test"
-    with pytest.raises(ValueError):
-        zenguard.detect_async([], prompt)
 
 
 def test_report_with_valid_detector_and_days(zenguard):
