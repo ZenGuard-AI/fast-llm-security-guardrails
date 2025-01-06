@@ -1,9 +1,7 @@
 <a href="https://docs.zenguard.ai/" target="_blank"><img src="https://img.shields.io/badge/docs-view-green" alt="Documentation"></a>
 [![ZenGuard SDK CI](https://github.com/ZenGuard-AI/zenguard-ai/actions/workflows/github-actions.yaml/badge.svg)](https://github.com/ZenGuard-AI/zenguard-ai/actions/workflows/github-actions.yaml) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT) [![PyPI version](https://img.shields.io/pypi/v/zenguard)](https://pypi.org/project/zenguard/)  <a href="https://colab.research.google.com/github/ZenGuard-AI/fast-llm-security-guardrails/blob/main/docs/colabs/zenguard_library.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
-![image](https://github.com/user-attachments/assets/1dbaf662-a9bb-4583-81f4-b357bd945225)
-
-
+![image](https://github.com/user-attachments/assets/b65e9121-aa6c-4bb3-af28-74b91416adb1)
 
 
 # ZenGuard AI
