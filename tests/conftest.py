@@ -12,15 +12,7 @@ def zen_api_key():
     api_key = os.environ.get("ZEN_API_KEY")
     assert api_key, "ZEN_API_KEY is not set"
     return api_key
-
-
-@pytest.fixture(scope="session", autouse=True)
-def clear_cache(zen_api_key):
-    response = httpx.put(
-        url="https://api.zenguard.ai/v1/cache/clear", headers={"x-api-key": zen_api_key}
-    )
-    response.raise_for_status()
-
+    
 
 @pytest.fixture(scope="module")
 def zenguard(zen_api_key):
