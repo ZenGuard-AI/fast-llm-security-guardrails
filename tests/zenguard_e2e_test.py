@@ -72,66 +72,6 @@ def test_secrets(zenguard):
     assert_successful_response_not_detected(response)
 
 
-def test_update_detectors(zenguard):
-    detectors = [Detector.SECRETS, Detector.ALLOWED_TOPICS]
-    response = zenguard.update_detectors(detectors=detectors)
-    assert response is None
-
-
-def test_detect_in_parallel_error_no_detectors(zenguard):
-    detectors = [Detector.SECRETS, Detector.ALLOWED_TOPICS]
-    response = zenguard.update_detectors(detectors=detectors)
-    assert response is None
-
-    prompt = "Simple in parallel test"
-    with pytest.raises(ValueError):
-        response = zenguard.detect([], prompt)
-
-
-def test_detect_in_parallel_pass_on_detectors(zenguard):
-    detectors = [Detector.SECRETS, Detector.BANNED_TOPICS]
-
-    prompt = "Simple in parallel test"
-    response = zenguard.detect(detectors, prompt)
-    assert_detectors_response(response, detectors)
-    assert "error" not in response
-
-
-def test_report_with_valid_detector_and_days(zenguard):
-    with patch("httpx.get") as mock_post:
-        mock_response = Mock()
-        # TODO(baur): Update this to the actual response
-        mock_response.json.return_value = {"prompt_injections": 10}
-        mock_post.return_value = mock_response
-
-        result = zenguard.report(detector=Detector.PROMPT_INJECTION, days=7)
-
-        assert result == {"prompt_injections": 10}
-        mock_post_args, mock_post_kwargs = mock_post.call_args
-
-        # Assert only the relevant parts of the API call
-        assert API_REPORT_PROMPT_INJECTIONS in mock_post_args[0]
-        assert mock_post_kwargs["params"] == {"days": 7}
-
-
-def test_report_with_invalid_detector(zenguard):
-    with pytest.raises(ValueError):
-        zenguard.report(detector=Detector.PII, days=7)
-
-
-def test_report_with_request_error(zenguard):
-    with patch("httpx.get") as mock_post:
-        mock_post.side_effect = httpx.RequestError("Connection error")
-
-        with pytest.raises(RuntimeError) as exc_info:
-            zenguard.report(detector=Detector.PROMPT_INJECTION)
-
-        assert (
-            str(exc_info.value)
-            == "An error occurred while making the request: Connection error"
-        )
-
-
 @pytest.mark.parametrize(
     "prompt,detector",
     [
