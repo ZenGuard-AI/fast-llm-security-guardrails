@@ -23,9 +23,6 @@ API_REPORT_PROMPT_INJECTIONS = "v1/report/prompt_injections"
 
 BASE_TIER_ENDPOINT = "https://api.zenguard.ai/"
 
-# Dedicated tier is not accessible if your API key is not whitelisted
-DEDICATED_TIER_ENDPOINT = "https://dedicated-tier.zenguard.ai/"
-
 
 class SupportedLLMs(str, Enum):
     CHATGPT = "chatgpt"
@@ -39,7 +36,6 @@ class Credentials:
 
 class Tier(str, Enum):
     BASE = "base"
-    DEDICATED = "dedicated"
 
 
 @dataclass
@@ -70,12 +66,12 @@ class DetectorAPI(str, Enum):
 
 # Mapping from Detector to DetectorAPI
 detector_to_api = {
-    Detector.ALLOWED_TOPICS: DetectorAPI.ALLOWED_TOPICS,
-    Detector.BANNED_TOPICS: DetectorAPI.BANNED_TOPICS,
-    Detector.PROMPT_INJECTION: DetectorAPI.PROMPT_INJECTION,
-    Detector.KEYWORDS: DetectorAPI.KEYWORDS,
-    Detector.PII: DetectorAPI.PII,
-    Detector.SECRETS: DetectorAPI.SECRETS,
+    Detector.ALLOWED_TOPICS: DetectorAPI.ALLOWED_TOPICS.value,
+    Detector.BANNED_TOPICS: DetectorAPI.BANNED_TOPICS.value,
+    Detector.PROMPT_INJECTION: DetectorAPI.PROMPT_INJECTION.value,
+    Detector.KEYWORDS: DetectorAPI.KEYWORDS.value,
+    Detector.PII: DetectorAPI.PII.value,
+    Detector.SECRETS: DetectorAPI.SECRETS.value,
 }
 
 
@@ -101,8 +97,6 @@ class ZenGuard:
         self._api_key = api_key
 
         self._backend = BASE_TIER_ENDPOINT
-        if config.tier == Tier.DEDICATED:
-            self._backend = DEDICATED_TIER_ENDPOINT
 
         if config.llm == SupportedLLMs.CHATGPT:
             self.chat = ChatWithZenguard(
@@ -119,7 +113,7 @@ class ZenGuard:
         """
         if prompt.isspace() or prompt == "":
             raise ValueError("Prompt can't be empty.")
-        
+
         if len(detectors) == 0:
             raise ValueError("No detectors were provided")
 
