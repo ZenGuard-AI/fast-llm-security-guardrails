@@ -4,34 +4,19 @@ ZenGuard is a class that represents the ZenGuard object. It is used to connect t
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any, Dict, Optional
+from typing import Optional
 
 import httpx
-from openai import OpenAI
 from tqdm import tqdm
-
-from zenguard.ai_clients.openai import ChatWithZenguard
-from zenguard.pentest.prompt_injections import (
-    config,
-    prompting,
-    run,
-    scoring,
-    visualization,
-)
 
 API_REPORT_PROMPT_INJECTIONS = "v1/report/prompt_injections"
 
 BASE_TIER_ENDPOINT = "https://api.zenguard.ai/"
 
 
-class SupportedLLMs(str, Enum):
-    CHATGPT = "chatgpt"
-
-
 @dataclass
 class Credentials:
     api_key: str
-    llm_api_key: Optional[str] = None
 
 
 class Tier(str, Enum):
@@ -41,8 +26,6 @@ class Tier(str, Enum):
 @dataclass
 class ZenGuardConfig:
     credentials: Credentials
-    ai_client: Optional[OpenAI] = None
-    llm: Optional[SupportedLLMs] = None
     tier: Optional[Tier] = Tier.BASE
 
 
@@ -79,11 +62,6 @@ def convert_detector_to_api(detector):
     return detector_to_api[detector]
 
 
-class Endpoint(Enum):
-    ZENGUARD = "zenguard"
-    OPENAI = "openai"
-
-
 class ZenGuard:
     """
     ZenGuard is a class that represents the ZenGuard object.
@@ -92,20 +70,11 @@ class ZenGuard:
 
     def __init__(self, config: ZenGuardConfig):
         api_key = config.credentials.api_key
-        if type(api_key) != str or api_key == "":
+        if type(api_key) is not str or api_key == "":
             raise ValueError("The API key must be a string type and not empty.")
         self._api_key = api_key
 
         self._backend = BASE_TIER_ENDPOINT
-
-        if config.llm == SupportedLLMs.CHATGPT:
-            self.chat = ChatWithZenguard(
-                client=config.ai_client,
-                zenguard=self,
-                openai_key=config.credentials.llm_api_key,
-            )
-        elif config.llm is not None:
-            raise ValueError(f"LLM {config.llm} is not supported")
 
     def detect(self, detectors: list[Detector], prompt: str):
         """
@@ -117,17 +86,10 @@ class ZenGuard:
         if len(detectors) == 0:
             raise ValueError("No detectors were provided")
 
-        json: Dict[str, Any] = {"messages": [prompt]}
-        if len(detectors) == 1:
-            url = f"{self._backend}{convert_detector_to_api(detectors[0])}"
-        else:
-            url = f"{self._backend}v1/detect"
-            json["detectors"] = detectors
-
         try:
             response = httpx.post(
-                url,
-                json=json,
+                f"{self._backend}{convert_detector_to_api(detectors[0])}",
+                json={"messages": [prompt]},
                 headers={"x-api-key": self._api_key},
                 timeout=20,
             )
@@ -151,24 +113,6 @@ class ZenGuard:
 
             attack["result"] = attack["settings"]["attack_rogue_string"]
 
-    def pentest(self, endpoint: Endpoint, detector: Detector = None):
-        base_prompts = config.default_attack_config
-        attack_prompts = prompting.build_prompts(base_prompts)
-
-        if endpoint == Endpoint.ZENGUARD:
-            print("\nRunning attack on ZenGuard endpoint:")
-            assert (
-                detector == Detector.PROMPT_INJECTION
-            ), "Only prompt injection pentesting is currently supported"
-            self._attack_zenguard(Detector.PROMPT_INJECTION, attack_prompts)
-        elif endpoint == Endpoint.OPENAI:
-            print("\nRunning attack on OpenAI endpoint:")
-            run.run_prompts_api(attack_prompts, self.chat._client)
-
-        scoring.score_attacks(attack_prompts)
-        df = visualization.build_dataframe(attack_prompts)
-        print(scoring.get_metrics(df, "Attack Instruction"))
-
     def update_detectors(self, detectors: list[Detector]):
         if len(detectors) == 0:
             return {"error": "No detectors were provided"}
@@ -185,40 +129,3 @@ class ZenGuard:
 
         if response.status_code != 200:
             return {"error": str(response.json())}
-
-    def report(self, detector: Detector, days: int = None):
-        """
-        Get a report of the detections made by the detector in the last days.
-        Days is optional and if not provided, it will return all the detections.
-        Days is int and will give back the number of detections made in the last days.
-        """
-
-        if detector != Detector.PROMPT_INJECTION:
-            raise ValueError(
-                "Only Prompt Injection detector is currently supported for reports"
-            )
-
-        params = {}
-        if days:
-            params["days"] = days
-
-        url = self._backend + API_REPORT_PROMPT_INJECTIONS
-
-        try:
-            response = httpx.get(
-                url,
-                params=params,
-                headers={"x-api-key": self._api_key},
-                timeout=20,
-            )
-            response.raise_for_status()
-        except httpx.RequestError as e:
-            raise RuntimeError(
-                f"An error occurred while making the request: {str(e)}"
-            ) from e
-        except httpx.HTTPStatusError as e:
-            raise RuntimeError(
-                f"Received an unexpected status code: {response.status_code}\nResponse content: {response.text}"
-            ) from e
-
-        return response.json()

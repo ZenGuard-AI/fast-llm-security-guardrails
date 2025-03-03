@@ -1,9 +1,6 @@
-from unittest.mock import Mock, patch
-
-import httpx
 import pytest
 
-from zenguard.zenguard import API_REPORT_PROMPT_INJECTIONS, Detector
+from zenguard.zenguard import Detector
 
 
 def assert_successful_response_not_detected(response):

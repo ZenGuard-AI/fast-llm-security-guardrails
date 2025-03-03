@@ -1,10 +1,7 @@
 import os
-
 import pytest
-import httpx
-from openai import OpenAI
 
-from zenguard.zenguard import Credentials, SupportedLLMs, ZenGuard, ZenGuardConfig
+from zenguard.zenguard import Credentials, ZenGuard, ZenGuardConfig
 
 
 @pytest.fixture(scope="session")
@@ -17,18 +14,4 @@ def zen_api_key():
 @pytest.fixture(scope="module")
 def zenguard(zen_api_key):
     config = ZenGuardConfig(credentials=Credentials(api_key=zen_api_key))
-    return ZenGuard(config=config)
-
-
-@pytest.fixture(scope="module")
-def zenguard_openai(zen_api_key):
-    openai_key = os.environ.get("OPENAI_API_KEY")
-    assert openai_key, "OPENAI_API_KEY is not set"
-
-    openai_client = OpenAI(api_key=openai_key)
-    config = ZenGuardConfig(
-        credentials=Credentials(api_key=zen_api_key),
-        ai_client=openai_client,
-        llm=SupportedLLMs.CHATGPT,
-    )
     return ZenGuard(config=config)
