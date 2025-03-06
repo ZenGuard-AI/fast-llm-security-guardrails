@@ -10,7 +10,6 @@ readme = "README.md"
 python = "^3.9"
 httpx = ">=0.24.0,<1.0.0"
 tqdm = "^4.66.2"
-openai = "^1.14.2"
 rapidfuzz = "^3.7.0"
 pandas = "^2.2.1"
 
