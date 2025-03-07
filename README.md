@@ -28,9 +28,18 @@ ZenGuard is a real-time trust layer for AI Agents. It protects AI agents during 
 
 Start by installing ZenGuard package:
 
+Using pip:
+
 ```shell
 pip install zenguard
 ```
+
+Using poetry:
+
+```shell
+poetry add zenguard
+```
+
 
 ## Getting Started
 
@@ -47,7 +56,7 @@ Test the capabilities of ZenGuard in our ZenGuard [Playground](https://console.z
 
 # Documentation
 
-A more detailed documentation is available at [docs.zenguard.ai](https://docs.zenguard.ai/).
+Detailed documentation is available at [docs.zenguard.ai](https://docs.zenguard.ai/).
 
 ## Detectors
 
