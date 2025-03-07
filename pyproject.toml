@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "zenguard"
-version = "0.2.3"
+version = "0.3.0"
 description = "Fast production grade security for GenAI applications"
 authors = ["ZenGuard Team <hello@zenguard.ai>"]
 license = "MIT"
