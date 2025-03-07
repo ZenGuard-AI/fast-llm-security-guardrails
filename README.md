@@ -63,7 +63,7 @@ Try detectors functionality in Google Colab
 We offer tiered access to ZenGuard infrastructure, providing flexibility based on your needs. Currently, there are two available tiers:
 
 * **BASE** – This default tier falls under free trial plan and operates with rate limits. Requests are served based on availability.
-* **DEDICATED** – This high-performance tier supports a high volume of queries per second (QPS) and is enabled in [Standard Plan](https://zenguard.ai/#guardrails).
+* **DEDICATED** – This high-performance tier supports a high volume of queries per second (QPS) and is enabled in [Standard Plan](https://zenguard.ai/#guardrails). This tier is only available for the enterprise customers.
 
 Enable DEDICATED tier:
 
@@ -75,85 +75,10 @@ config = ZenGuardConfig(credentials=Credentials(api_key=os.environ.get("ZEN_API_
 zenguard = ZenGuard(config=config)
 ```
 
+## Migration to v0.3.0
 
-# Penetration Testing
+As of 03.07.2025 the detect method is calling the Zen Input API to perform multiple detections. For now the multiple detectors are supported only for the dedicated tier.
 
-Run pen test against both ZenGuard and (optionally) ChatGPT.
-
-Note that we are always running the pentest against the most up-to-date models, such as:
-
-* ZenGuard: latest release
-* ChatGPT: `gpt-4-0125-preview`
-
-### Using `zenguard` library
-
-Pentest against ZenGuard:
-
-```python
-import os
-
-from zenguard import (
-    Credentials,
-    Detector,
-    Endpoint,
-    ZenGuard,
-    ZenGuardConfig,
-)
-
-if __name__ == "__main__":
-    api_key = os.environ.get("ZEN_API_KEY")
-    if not api_key:
-        raise ValueError("ZEN_API_KEY is not set")
-
-    config = ZenGuardConfig(credentials=Credentials(api_key=api_key))
-    zenguard = ZenGuard(config=config)
-    zenguard.pentest(endpoint=Endpoint.ZENGUARD, detector=Detector.PROMPT_INJECTION)
-```
-
-Pentest against ZenGuard and ChatGPT:
-
-```python
-import os
-
-from zenguard import (
-    Credentials,
-    Detector,
-    Endpoint,
-    SupportedLLMs,
-    ZenGuard,
-    ZenGuardConfig,
-)
-
-if __name__ == "__main__":
-    api_key = os.environ.get("ZEN_API_KEY")
-    openai_api_key = os.environ.get("OPENAI_API_KEY")
-    if not api_key or not openai_api_key:
-        raise ValueError("API keys are not set")
-
-    config = ZenGuardConfig(credentials=Credentials(api_key=api_key, llm_api_key=openai_api_key), llm=SupporedLLMs.CHATGPT)
-    zenguard = ZenGuard(config=config)
-    zenguard.pentest(endpoint=Endpoint.ZENGUARD, detector=Detector.PROMPT_INJECTION)
-    zenguard.pentest(endpoint=Endpoint.OPENAI, detector=Detector.PROMPT_INJECTION)
-```
-
-
-### Using pentest script
-
-Clone this repo and install requirements.
-
-Run pen test against ZenGuard:
-
-```shell
-export ZEN_API_KEY=your-api-key
-python tests/pentest.py
-```
-
-Run pentest against both ZenGuard and ChatGPT:
-```shell
-export ZEN_API_KEY=your-api-key
-export OPENAI_API_KEY=your-openai-api-key
-python tests/pentest.py
-```
 
 ## Support and Contact
 
