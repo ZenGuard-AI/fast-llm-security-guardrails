@@ -91,6 +91,15 @@ zenguard = ZenGuard(config=config)
 As of 03.07.2025 detection using multiple detectors is supported only for the Dedicated tier. The single detector detection is supported by all tiers.
 
 
+## Integrations
+
+This section contains guides for integrating Zenguard with external platforms and services.
+
+### Available Integrations
+
+- [Salesforce (Agentforce)](https://docs.zenguard.ai/learn/agentforce-integration-tutorial) <img src="https://cdn.iconscout.com/icon/free/png-256/free-salesforce-icon-download-in-svg-png-gif-file-formats--logo-brand-world-logos-vol-1-pack-icons-282298.png" alt="Salesforce Logo" width="20">
+
+
 ## Support and Contact
 
 [Book a Demo](https://calendly.com/galym-u) or just shoot us an email to hello@zenguard.ai
