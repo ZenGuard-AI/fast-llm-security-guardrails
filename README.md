@@ -97,7 +97,7 @@ This section contains guides for integrating Zenguard with external platforms an
 
 ### Available Integrations
 
-- <img src="https://cdn.iconscout.com/icon/free/png-256/free-salesforce-icon-download-in-svg-png-gif-file-formats--logo-brand-world-logos-vol-1-pack-icons-282298.png" alt="Salesforce Logo" width="20"> [Salesforce (Agentforce)](https://docs.zenguard.ai/learn/agentforce-integration-tutorial)
+- [Salesforce (Agentforce)](https://docs.zenguard.ai/learn/agentforce-integration-tutorial) <img src="https://cdn.iconscout.com/icon/free/png-256/free-salesforce-icon-download-in-svg-png-gif-file-formats--logo-brand-world-logos-vol-1-pack-icons-282298.png" alt="Salesforce Logo" width="20">
 
 
 ## Support and Contact
