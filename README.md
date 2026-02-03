@@ -3,6 +3,9 @@
 
 ![image](https://github.com/user-attachments/assets/b65e9121-aa6c-4bb3-af28-74b91416adb1)
 
+## ⚠️ Project Archived
+
+This repository is archived and read-only.
 
 # ZenGuard
 
